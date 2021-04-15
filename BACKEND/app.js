@@ -4,7 +4,6 @@ const app = express();
 
 const path = require('path');
 
-
 const mysql2 = require('mysql2');
 
 require('dotenv').config(); //pour definir les variables d environnement 
@@ -13,9 +12,9 @@ require('dotenv').config(); //pour definir les variables d environnement
 
 // const commentRoutes = require('./routes/comment'); 
 
-const userRoutes = require('./routes/user');
+const userRoutes = require ('./routes/user');
 
-// const messageRoutes = require('./routes/message');
+const messageRoutes = require('./routes/message');
 
 // const likeRoutes = require('./routes/like');
 
@@ -43,9 +42,9 @@ app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-// app.use('/api/sauces',sauceRoutes)
+app.use('/message', messageRoutes);
 
-app.use('/api/auth', userRoutes);
+app.use('/auth', userRoutes);
 
 app.use(helmet());
 
