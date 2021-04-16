@@ -8,12 +8,15 @@ const {
 
 var User = database.define('user', {
     email: { type: DataTypes.STRING, unique: true},
-    username: DataTypes.STRING,
+    username: { type: DataTypes.STRING, unique: true},
     password: DataTypes.STRING,
     job: DataTypes.TEXT,
     bio: DataTypes.TEXT,
   }
-
 );
+
+User.hasMany(Like);
+User.hasMany(Message);
+User.hasMany(Comment);
 
 module.exports = User;

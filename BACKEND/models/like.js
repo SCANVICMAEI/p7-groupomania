@@ -6,15 +6,13 @@ const {
   database
 } = require('../config/sequelizeConfig.js');
 
-var Comment = database.define('comment', {
-    content: DataTypes.STRING,
+var Like = database.define('like', {
     idMessage: DataTypes.INTEGER,
     idUser: DataTypes.INTEGER
   }
 
 );
-Comment.belongsTo(Message);
-Comment.belongsTo(User);
+Like.belongsTo(Message);
+Like.belongsTo(User);
 
-module.exports = Comment;
-
+module.exports = Like;
