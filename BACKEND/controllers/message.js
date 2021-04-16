@@ -8,20 +8,20 @@ const {where} = require('sequelize');
 
 // NEW MESSAGE 
 
-exports.createMessage = (req, res, next) => {
-  const message = req.body;
-  Message.create({
-      idUser: message.idUser,
-      message: message.message,
-    }).then(message => {
-      res.status(201).json({
-        message: message
-      })
-    })
-    .catch(error => res.status(400).json({
-      error: "Erreur POST message "
-    }));
-};
+// exports.createMessage = (req, res, next) => {
+//   const message = req.body;
+//   Message.create({
+//       idUser: message.idUser,
+//       message: message.message,
+//     }).then(message => {
+//       res.status(201).json({
+//         message: message
+//       })
+//     })
+//     .catch(error => res.status(400).json({
+//       error: "Erreur POST message "
+//     }));
+// };
 
 // GET ALL MESSAGE
 

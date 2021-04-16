@@ -6,12 +6,12 @@ const {
   database
 } = require('../config/sequelizeConfig.js');
 
-var User = database.define('User', {
-    email: DataTypes.STRING,
+var User = database.define('user', {
+    email: { type: DataTypes.STRING, unique: true},
     username: DataTypes.STRING,
     password: DataTypes.STRING,
-    job: DataTypes.STRING,
-    bio: DataTypes.STRING,
+    job: DataTypes.TEXT,
+    bio: DataTypes.TEXT,
   }
 
 );
