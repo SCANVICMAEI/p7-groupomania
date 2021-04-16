@@ -11,10 +11,10 @@ module.exports = {
       idUser: {
         alloNull:false,
         type: Sequelize.INTEGER,
-        references : {
-          model:'Users',
-          Key:'id'
-        }
+        // references : {
+        //   model:'Users',
+        //   Key:'id'
+        // }
       },  
       message: {
         type: Sequelize.STRING

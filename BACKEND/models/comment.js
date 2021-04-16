@@ -13,6 +13,7 @@ var Comment = database.define('comment', {
   }
 
 );
+
 Comment.belongsTo(Message);
 Comment.belongsTo(User);
 

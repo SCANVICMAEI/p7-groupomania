@@ -1,7 +1,5 @@
 'use strict';
 
-const {Sequelize,DataTypes, database} = require('../config/sequelizeConfig.js');
-
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');

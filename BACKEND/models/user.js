@@ -15,8 +15,8 @@ var User = database.define('user', {
   }
 );
 
-User.hasMany(Like);
-User.hasMany(Message);
-User.hasMany(Comment);
+// User.hasMany(Comment);
+// User.hasMany(Like);
+// User.hasMany(Message);
 
 module.exports = User;
