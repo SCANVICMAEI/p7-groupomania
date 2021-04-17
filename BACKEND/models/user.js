@@ -6,6 +6,10 @@ const {
   database
 } = require('../config/sequelizeConfig.js');
 
+require('../models/message');
+require('../models/comment');
+require('../models/like');
+
 var User = database.define('user', {
     email: { type: DataTypes.STRING, unique: true},
     username: { type: DataTypes.STRING, unique: true},
