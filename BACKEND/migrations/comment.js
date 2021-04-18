@@ -13,17 +13,17 @@ module.exports = {
       },
       idMessage: {
         type: Sequelize.INTEGER,
-      //   references : {
-      //     model:'Messages',
-      //     Key:'id'
-      // }
+        references : {
+          model:'Messages',
+          Key:'id'
+      }
     },
       idUser: {
         type: Sequelize.INTEGER,
-        // references : {
-      //     model:'Users',
-      //     Key:'id'
-      // }
+        references : {
+          model:'Users',
+          Key:'id'
+      }
     },
       createdAt: {
         allowNull: false,

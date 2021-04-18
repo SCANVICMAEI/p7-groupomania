@@ -6,17 +6,19 @@ const {
   database
 } = require('../config/sequelizeConfig.js');
 
-require('../models/user');
-require('../models/message');
+const Message = require('../models/message');
+const User = require('../models/user');
 
-var Like = database.define('like', {
+var Like = database.define('liketest', {
     idMessage: DataTypes.INTEGER,
     idUser: DataTypes.INTEGER
   }
 
 );
 
-// Like.belongsTo(Message);
-// Like.belongsTo(User);
+//RELATIONS
+
+Like.belongsTo(Message);
+Like.belongsTo(User);
 
 module.exports = Like;

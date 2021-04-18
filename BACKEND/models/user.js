@@ -6,9 +6,9 @@ const {
   database
 } = require('../config/sequelizeConfig.js');
 
-require('../models/message');
-require('../models/comment');
-require('../models/like');
+const Message = require('../models/message');
+const Comment = require('../models/comment');
+const Like = require('../models/like');
 
 var User = database.define('user', {
     email: { type: DataTypes.STRING, unique: true},
@@ -19,8 +19,10 @@ var User = database.define('user', {
   }
 );
 
-// User.hasMany(Comment);
-// User.hasMany(Like);
-// User.hasMany(Message);
+//RELATIONS
+
+User.hasMany(Comment);
+User.hasMany(Like);
+User.hasMany(Message);
 
 module.exports = User;

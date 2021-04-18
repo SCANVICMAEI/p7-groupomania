@@ -6,8 +6,8 @@ const {
   database
 } = require('../config/sequelizeConfig.js');
 
-require('../models/user');
-require('../models/message');
+const Message = require('../models/message');
+const User = require('../models/user');
 
 var Comment = database.define('comment', {
     content: DataTypes.STRING,
@@ -15,6 +15,8 @@ var Comment = database.define('comment', {
     idUser: DataTypes.INTEGER
   }
 );
+
+//RELATIONS
 
 Comment.belongsTo(Message);
 Comment.belongsTo(User);

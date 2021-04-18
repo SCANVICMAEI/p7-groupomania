@@ -11,18 +11,18 @@ module.exports = {
       idUser: {
         allowNull: false,
         type: Sequelize.INTEGER,
-      //   references : {
-      //     model:'Users',
-      //     Key:'id'
-      //  }
+        references : {
+          model:'Users',
+          Key:'id'
+       }
       },
       idMessage: {
         allowNull: false,
         type: Sequelize.INTEGER,
-      //   references : {
-      //     model:'Messages',
-      //     Key:'id'
-      // }
+        references : {
+          model:'Messages',
+          Key:'id'
+      }
     },
       createdAt: {
         allowNull: false,
