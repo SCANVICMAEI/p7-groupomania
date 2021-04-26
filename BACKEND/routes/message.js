@@ -8,7 +8,10 @@ const messageCtrl = require('../controllers/message');
 // const multer = require('../middlewares/multer');
 
 router.post('/',messageCtrl.createMessage);
-// router.delete('/:id', messageCtrl.deleteMessage);
+
 router.get('/', messageCtrl.allMessage)
+
+router.delete('/:id', messageCtrl.deleteMessage);
+
 
 module.exports = router;

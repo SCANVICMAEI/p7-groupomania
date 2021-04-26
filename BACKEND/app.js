@@ -10,13 +10,12 @@ require('dotenv').config(); //pour definir les variables d environnement
 
 // Importation des  routes
 
-// const commentRoutes = require('./routes/comment'); 
+const commentRoutes = require('./routes/comment'); 
 
 const userRoutes = require ('./routes/user');
 
 const messageRoutes = require('./routes/message');
 
-// const likeRoutes = require('./routes/like');
 
 // Mise en place securité
 
@@ -42,9 +41,11 @@ app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+app.use('/comment', commentRoutes);
+
 app.use('/message', messageRoutes);
 
-app.use('/auth', userRoutes);
+app.use('/user', userRoutes);
 
 app.use(helmet());
 

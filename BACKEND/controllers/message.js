@@ -2,13 +2,11 @@
 const Message = require('../models/message');
 const fs = require('fs');
 
-const {
-  where
-} = require('sequelize');
+const {where} = require('sequelize');
 
 // ROUTES
 
-// NEW MESSAGE 
+// CREATION MESSAGE TCHAT
 
 exports.createMessage = (req, res, next) => {
   const message = req.body;
@@ -25,7 +23,7 @@ exports.createMessage = (req, res, next) => {
     }));
 };
 
-// GET ALL MESSAGE
+// RECUPERATION DE TOUS LES MESSAGES
 
 exports.allMessage = (req, res, next) => {
   Message.findAll()
@@ -42,19 +40,15 @@ exports.allMessage = (req, res, next) => {
 };
 
 
-// DELETE ONE MESSAGE 
+// SUPPRIMER UN MESSAGE
 
-// exports.deleteMessage = (req, res, next) => {
-//     Message.findOne({
-//       id: req.body.id
-//     })
-//     Sauce.deleteOne({
-//         id: req.params.id
-//       })
-//       .then(() => res.status(200).json({
-//         message: 'Message supprimé !'
-//       }))
-//       .catch(error => res.status(400).json({
-//         error
-//       }));
-//   };
+exports.deleteMessage =(req, res, next) => {
+  const id = req.params.id
+ Message.destroy({where:{id:id}})
+      .then(() => res.status(200).json({
+        message: 'Message supprimé !'+ id
+      }))
+      .catch(error => res.status(400).json({
+        error
+      }));
+};
