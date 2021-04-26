@@ -100,10 +100,10 @@ exports.userDelete = (req, res, next) => {
       }
     })
     .then(() => res.status(200).json({
-      message: 'Utilisateur Supprimer !' + user
+      message: 'Utilisateur Supprimer !'
     }))
     .catch(error => res.status(404).json({
-      message: ' Erreur Utilisateur non Supprimer !'+ user
+      message: ' Erreur Utilisateur non Supprimer !'
     }));
 }
 
@@ -111,21 +111,18 @@ exports.userDelete = (req, res, next) => {
 // MODIFIER UTILISATEUR
 
 exports.userUpdate = (req, res, next) => {
-  User.update({
+  const id = req.params.id
+  User.findOne({
       where: {
-        email: req.body.email
-      },
-      where: {
-        username: req.body.username
-      },
-      where: {
-        job: req.body.job
-      },
-      where: {
-        bio: req.body.bio
+        id: id
       }
     })
-
+    User.update({
+      username :req.body.username,
+      username: req.body.username,
+      job: req.body.job,
+      bio: req.body.bio
+    })
     .then(() => res.status(200).json({
       message: 'Utilisateur Modifier!'
     }))
@@ -137,35 +134,24 @@ exports.userUpdate = (req, res, next) => {
 // RECUPERER UN UTILISATEUR 
 
 exports.userGetOne = (req, res, next) => {
-
   const id = req.params.id;
-
-  User.findByPk(id)
-    .then(user => {
-      res.send(user);
+  User.findOne({
+      where: {
+        id: id
+      }
     })
+    .then(() => res.status(200).json({
+      message: 'Utilisateur trouver !'
+    }))
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Tutorial with id=" + id
-      });
-    });
-};
-
-
-
-
-
-
-
-
-    // const id = req.params.id
-    // User.findByPk(id) {
-    //     .then(User) => {
-    //         res.send(User);
-    //       })
-    //       .catch(err => {
-    //           res.status(500).send({
-    //             message: "Error retrieving Tutorial with id=" + id
-    //           });
-    //         }
+        message: "Erreur utilisateur non trouver"
       
+      })})
+  }
+
+
+
+
+
+

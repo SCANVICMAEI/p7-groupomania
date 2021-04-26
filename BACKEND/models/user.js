@@ -13,6 +13,7 @@ const User = database.define('User', {
   password: DataTypes.STRING,
   job: DataTypes.TEXT,
   bio: DataTypes.TEXT,
+  isAdmin: DataTypes.BOOLEAN,
 },{
   Sequelize,
   modelName:'User'
