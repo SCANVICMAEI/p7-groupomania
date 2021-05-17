@@ -33,9 +33,9 @@ exports.signup = (req, res, next) => {
               job: req.body.job,
               bio: req.body.bio,
             })
-            .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+            .then(() => res.status(201).json({ message: 'Utilisateur créé !'+ User }))
             .catch(error => res.status(400).json({
-              error:' Erreur Utilisateur login !'
+              error:' Erreur Utilisateur Signup !'
             }));
         })
         .catch(error => res.status(500).json({
@@ -53,6 +53,7 @@ exports.signup = (req, res, next) => {
           }
         })
         .then(user => {
+          console.log(user)
           if (!user) {
             return res.status(401).json({
               error: 'Utilisateur non trouvé !'
@@ -65,16 +66,19 @@ exports.signup = (req, res, next) => {
                   error: 'Mot de passe incorrect !'
                 });
               }
+              console.log(user)
               res.status(200).json({
                 userId: user.id,
+                  //a ajouter is admin bolean
                 token: jwt.sign({
                     userId: user.id
                   },
                   `${process.env.TOP_SECRET}`, {
                     expiresIn: '24h'
-                  } // expire 24 h 
+                  } // expire 24 h
                 )
               });
+              console.log("good")
             })
             .catch(error => res.status(500).json({
               error

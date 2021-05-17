@@ -16,14 +16,16 @@ module.exports = {
         references : {
           model:'Messages',
           Key:'id'
-      }
+      },
+      onDelete:"CASCADE",
     },
       idUser: {
         type: Sequelize.INTEGER,
         references : {
           model:'Users',
           Key:'id'
-      }
+      },
+      onDelete:"CASCADE",
     },
       createdAt: {
         allowNull: false,

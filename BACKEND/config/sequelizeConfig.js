@@ -8,6 +8,6 @@ const database = new Sequelize (`mysql://${process.env.DB_USER}:${process.env.DB
 
 database.authenticate()
 .then(() => console.log("connection ok !!!"))
-.catch(err =>console.log("connection échouer:" + err));
+.catch(err =>console.log("connection échouée:" + err));
 
 module.exports = {Sequelize, DataTypes,database};

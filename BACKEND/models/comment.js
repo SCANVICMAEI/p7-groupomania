@@ -10,8 +10,8 @@ const {
 
 const Comment = database.define('Comment', {
   content: DataTypes.STRING,
-  idMessage: DataTypes.INTEGER,
-  idUser: DataTypes.INTEGER
+  // idMessage: DataTypes.INTEGER,
+  // idUser: DataTypes.INTEGER
 },{
   Sequelize,
   modelName:'Comment'

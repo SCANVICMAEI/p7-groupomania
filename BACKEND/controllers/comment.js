@@ -1,8 +1,7 @@
 //IMPORTS
-const Comment = require('../models/comment');
-const Message = require('../models/message');
-const User = require('../models/user');
 
+const jwt = require('jsonwebtoken');
+const {Message, User, Comment}= require('../models/relations')
 const fs = require('fs');
 
 const {
@@ -14,12 +13,22 @@ const {
 //CREATION COMMENTAIRE
 
 exports.createComment = (req, res, next) => {
-  const comment = req.body;
+
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token,`${process.env.TOP_SECRET}`);
+  const userId = decodedToken.userId;
+
+ const comment = req.body;
+
+  const MessageId = req.params.id
+ 
   Comment.create({
       content: comment.content,
-      idMessage: comment.idMessage,
-      idUser:comment.idUser
-    }).then(comment => {
+      MessageId:MessageId,
+      UserId:userId,
+    })
+    
+    .then(comment => {
       res.status(201).json({
       message:comment
       })

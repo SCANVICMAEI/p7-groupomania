@@ -17,6 +17,4 @@ router.delete('/:id', userCtrl.userDelete);
 
 router.put('/:id',auth,userCtrl.userUpdate);
 
-// router.get('/User',userCtrl.userGetOne)
-
 module.exports = router;

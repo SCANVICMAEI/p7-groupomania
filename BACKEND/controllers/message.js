@@ -1,7 +1,9 @@
 //IMPORTS
-const Message = require('../models/message');
-const User = require('../models/user');
-const Comment = require('../models/comment');
+
+
+const jwt = require('jsonwebtoken');
+const {Message, User, Comment}= require('../models/relations');
+
 const fs = require('fs');
 
 const {where} = require('sequelize');
@@ -12,10 +14,14 @@ const { URLSearchParams } = require('url');
 // CREATION MESSAGE TCHAT
 
 exports.createMessage = (req, res, next) => {
-  const message = req.body;
+ 
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token,`${process.env.TOP_SECRET}`);
+  const userId = decodedToken.userId;
+
   Message.create({
-      idUser: message.idUser,
-      message: message.message,
+      idUser: userId,
+      message: req.body.message,
     }).then(message => {
       res.status(201).json({
         message: message
@@ -48,6 +54,7 @@ exports.allMessage = (req, res, next) => {
 
 
 // SUPPRIMER UN MESSAGE
+//att verifier is admin + identiter utilisateur 
 
 exports.deleteMessage =(req, res, next) => {
   const id = req.params.id

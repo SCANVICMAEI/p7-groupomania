@@ -59,8 +59,10 @@ export default {
       idUser:"",
       message: "",
       createdAt: "",
-      updatedAt: ""
-      }
+      updatedAt: "",
+      Comment:[]
+      },
+     
      
     };
   },
@@ -91,7 +93,7 @@ TchatMessage() {
         .get("http://localhost:3000/message")
         .then((res) => {
           let Messages =res.data
-           this.message=Messages.message;      
+           this.message = Messages.message;      
         })
         .catch(function (err) {
           console.log(err + "ERREUR MESSAGE");
@@ -110,16 +112,6 @@ TchatComment() {
           console.log(err + "ERREUR MESSAGE");
         });
     },
-
-
-
-
-
-
-
-
-
-
 
 
   },
