@@ -22,3 +22,4 @@ const User = database.define('User', {
 //RELATIONS
 
 module.exports = User;
+
