@@ -107,9 +107,7 @@ exports.signup = (req, res, next) => {
 
 
     // MODIFIER UTILISATEUR
-
     exports.userUpdate = (req, res, next) => {
-
       User.update({
           username: req.body.username,
           job: req.body.job,
@@ -124,7 +122,6 @@ exports.signup = (req, res, next) => {
     };
 
     // RECUPERER UN UTILISATEUR 
-
     exports.userGetOne = (req, res, next) => {
       const id = req.params.id;
       User.findOne({

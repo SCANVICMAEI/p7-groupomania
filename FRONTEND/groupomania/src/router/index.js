@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from '@/views/Home.vue';
-import Tchat from '@/views/Tchat.vue';
-// import NavBar from '@/component/NavBar.vue'
+import Home from '../views/Home.vue';
+import Tchat from '../views/Tchat.vue';
+
+
 const routes = [
   {
     path: '/',
@@ -10,13 +11,12 @@ const routes = [
     component: Home,
   },
   {
-    path:'/Tchat',
-    name:'Tchat',
+    path: '/Tchat',
+    name: 'Tchat',
     component:
-    Tchat,
-    // NavBar,
+      Tchat
+
   }
-  
 ];
 
 const router = createRouter({
