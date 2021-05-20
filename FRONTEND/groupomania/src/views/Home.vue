@@ -29,8 +29,8 @@
                   </button>
                 </p>
 
-                <form class="SignupLogin">
-                  <div class="form-label-group">
+                <form class="SignupLogin" >
+                  <div class="form-label-group .has-warning.has-error.has-success">
                     <input
                       v-model="username"
                       type="texte"
@@ -78,6 +78,8 @@
                       placeholder="bio"
                       required
                       autofocus
+                      minlength="5"
+                      maxlength="30"
                     />
                     <label for="inputbio">bio</label>
                   </div>
@@ -186,6 +188,8 @@ export default {
           if (res === 201) {
             this.$router.push("/");
             switcheToLogin;
+          }
+          else{
           }
         })
         .catch(function (err) {

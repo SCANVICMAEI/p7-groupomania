@@ -1,37 +1,42 @@
 <template>
+
   <div class="bloc tchat col-7 mt-5">
-    <div v-for="message of message" :key="message" class="bloc Message">
+    <div v-for="message in messages" :key="message" class="bloc Message">
       <ul class="list-group">
         <li class="list-group-item">
-          Le : {{}} <br />
-          {{}}
+          Le : {{ message.createdAt }} <br />
+          {{ message.message }}<br />
         </li>
       </ul>
+       <div v-for="comment in message.Comments" :key="comment" class="bloc Comment">
+      <ul class="list-group">
+        <li class="list-group-item"> 
+        {{comment.content}} 
+         </li> 
+      </ul>
+    </div> 
     </div>
+ 
+     
+
+   
   </div>
+  
 </template>
 
 <script>
+// import Comment from "../components/Comment";
+
 const axios = require("axios");
 export default {
   name: "Message",
+  // components: {
+  //   Comment,
+  // },
 
   data() {
     return {
-      message: {
-        id: "",
-        idUser: "",
-        message: "",
-        createdAt: "",
-        updatedAt: "",
-        Comment: [
-          {
-            content: "",
-            createdAt: "",
-            updatedAt: "",
-          },
-        ],
-      },
+      messages: "",
     };
   },
   methods: {
@@ -40,26 +45,17 @@ export default {
       axios
         .get("http://localhost:3000/message")
         .then((res) => {
-          let Messages = res.data;
-          this.message = Messages.message;
+          this.messages = res.data;
         })
-        .catch(function (err) {
-          console.log(err + "ERREUR MESSAGE");
-        });
-    },
 
-    //AFFICHAGE COMMENT
-    TchatComment() {
-      axios
-        .get("http://localhost:3000/comment")
-        .then((res) => {
-          let Comment = res.data;
-          this.content = Comment.content;
-        })
         .catch(function (err) {
           console.log(err + "ERREUR MESSAGE");
         });
     },
+  },
+
+  mounted() {
+    this.TchatMessage();
   },
 };
 </script>

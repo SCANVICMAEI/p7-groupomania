@@ -52,6 +52,10 @@ export default {
         });
     },
   },
+  mounted() {
+    this.Profil();
+  },
+
 };
 </script>
 

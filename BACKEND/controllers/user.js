@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken'); // token et verification 
 
+const multer = require('../middleware/multer-config')
+
 const passwordValidator = require('password-validator');
 const {where} = require('sequelize');
 
@@ -35,7 +37,7 @@ exports.signup = (req, res, next) => {
             })
             .then(() => res.status(201).json({ message: 'Utilisateur créé !'+ User }))
             .catch(error => res.status(400).json({
-              error:' Erreur Utilisateur Signup !'
+              error:' Erreur Utilisateur Signup !',
             }));
         })
         .catch(error => res.status(500).json({

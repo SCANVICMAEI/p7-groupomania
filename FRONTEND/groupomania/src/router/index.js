@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '../views/Home.vue';
-import Tchat from '../views/Tchat.vue';
+
 
 
 const routes = [
@@ -11,11 +11,18 @@ const routes = [
     component: Home,
   },
   {
-    path: '/Tchat',
+    path: '/tchat',
     name: 'Tchat',
-    component:
-      Tchat
-
+    component:() => import ('../views/Tchat.vue'),
+    // meta: {
+    //   requireAuth: true,
+    // },
+    props:true
+  },
+  {
+    path: '/profil',
+    name: 'Profil',
+    component:() => import ('../views/Profil.vue')
   }
 ];
 

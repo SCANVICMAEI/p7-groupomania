@@ -10,6 +10,7 @@ const {
 const Message = database.define('Message', {
   idUser: DataTypes.INTEGER,
   message: DataTypes.STRING,
+  attachment: DataTypes.STRING,
 },{
   Sequelize,
   modelName:'Message'

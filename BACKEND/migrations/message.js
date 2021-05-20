@@ -20,6 +20,10 @@ module.exports = {
       message: {
         type: Sequelize.STRING
       },
+      attachment: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

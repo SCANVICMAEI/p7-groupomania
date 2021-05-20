@@ -1,11 +1,11 @@
 //IMPORTS
-
-const jwt = require('jsonwebtoken');
 const {
   Message,
   User,
   Comment
 } = require('../models/relations');
+
+const jwt = require('jsonwebtoken');
 
 const fs = require('fs');
 
@@ -29,6 +29,7 @@ exports.createMessage = (req, res, next) => {
   Message.create({
       idUser: userId,
       message: req.body.message,
+      attachment: (req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null),
     }).then(message => {
       res.status(201).json({
         message: message
@@ -51,7 +52,10 @@ exports.allMessage = (req, res, next) => {
             model:User
           }],
         }
-      ]
+      ],
+      order:[[
+        "createdAt", "DESC"
+    ]]
     }).then((Message) => {
       res.status(201).json(
         (Message)

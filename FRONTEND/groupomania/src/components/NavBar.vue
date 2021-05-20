@@ -1,4 +1,5 @@
 <template>
+
   <div class="NavBar">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
       <img
