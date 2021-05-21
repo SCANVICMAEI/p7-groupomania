@@ -1,5 +1,4 @@
 <template>
-
   <div class="NavBar">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
       <img
@@ -10,10 +9,14 @@
       />
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Mon Profil</a>
+          <router-link to="/Profil" tag="button" class="nav-link"
+            >Mon Profil</router-link
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Déconexion</a>
+          <router-link to="/" tag="button" class="nav-link"
+            >Déconnexion</router-link
+          >
         </li>
       </ul>
     </nav>
@@ -31,7 +34,7 @@ export default {
   background-image: url("../assets/fond.jpg");
   background-size: cover;
 }
-.navbar{
-height: 5rem;
+.navbar {
+  height: 5rem;
 }
 </style>

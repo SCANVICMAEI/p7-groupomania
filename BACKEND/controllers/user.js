@@ -35,7 +35,8 @@ exports.signup = (req, res, next) => {
               job: req.body.job,
               bio: req.body.bio,
             })
-            .then(() => res.status(201).json({ message: 'Utilisateur créé !'+ User }))
+            .then(() => res.status(201).json({ message: 'Utilisateur créé !'+ User}
+            ))
             .catch(error => res.status(400).json({
               error:' Erreur Utilisateur Signup !',
             }));

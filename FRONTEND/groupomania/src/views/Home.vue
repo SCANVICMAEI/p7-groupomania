@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluidh-100">
     <div class="row no-gutter">
       <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
       <div class="col-md-8 col-lg-6 blocp">
@@ -12,9 +12,7 @@
                 <h2 class="login-heading mb-4" v-if="mode == 'login'">
                   S'identifier
                 </h2>
-
                 <h2 class="login-heading mb-4" v-else>S'inscrire</h2>
-
                 <p v-if="mode == 'login'">
                   Pas encore inscrit ?
                   <button class="switche" @click="switcheToCreateAccount()">
@@ -29,8 +27,10 @@
                   </button>
                 </p>
 
-                <form class="SignupLogin" >
-                  <div class="form-label-group .has-warning.has-error.has-success">
+                <form class="SignupLogin">
+                  <div
+                    class="form-label-group .has-warning.has-error.has-success"
+                  >
                     <input
                       v-model="username"
                       type="texte"
@@ -38,6 +38,9 @@
                       class="form-control"
                       v-if="mode == 'create'"
                       placeholder="Pseudo"
+                      minlength="3"
+                      maxlength="10"
+                      pattern="[A-z-_ çàâéèeîïù]{2,30}"
                       required
                       autofocus
                     />
@@ -64,7 +67,10 @@
                       id="inputPassword"
                       class="form-control"
                       placeholder="Password"
+                      title="Veuillez écrire un mail valide"
+                      pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]{2,}.[a-zA-Z]{2,4}$"
                       required
+                      autofocus
                     />
                     <label for="inputPassword">Password</label>
                   </div>
@@ -76,10 +82,10 @@
                       id="inputbio"
                       class="form-control"
                       placeholder="bio"
-                      required
                       autofocus
                       minlength="5"
-                      maxlength="30"
+                      maxlength="40"
+                      pattern="/[^><%#!$/(){}]{15,400}$/"
                     />
                     <label for="inputbio">bio</label>
                   </div>
@@ -91,7 +97,9 @@
                       id="inputjob"
                       class="form-control"
                       placeholder="job"
-                      required
+                      minlength="5"
+                      maxlength="15"
+                      pattern="/[^><%#!$/(){}]{15,400}$/"
                       autofocus
                     />
                     <label for="inputjob">job</label>
@@ -186,10 +194,13 @@ export default {
         .then((res) => {
           console.log(res.data);
           if (res === 201) {
-            this.$router.push("/");
+            swal({
+              title: "Felicitation!",
+              text: "Votre compte est crée merci de s 'identifier ",
+              icon: "success",
+            });
+            this.$router.push("/login");
             switcheToLogin;
-          }
-          else{
           }
         })
         .catch(function (err) {
@@ -197,15 +208,13 @@ export default {
         });
     },
 
-    //LOGIN
+    //LOGIN +  ENVOIE TOKEN+ID DANS LOCALSTORAGE
 
     loginAccount() {
       let User = {
         email: this.email,
         password: this.password,
       };
-
-      // ENVOIE TOKEN+ID DANS LOCALSTORAGE
 
       axios
         .post("http://localhost:3000/user/login", User)
@@ -214,7 +223,6 @@ export default {
             localStorage.setItem("User", JSON.stringify(res.data));
             this.$router.push("/Tchat");
           }
-          console.log(res.data);
         })
         .catch(function (err) {
           console.log(err + "login hs");
