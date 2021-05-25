@@ -48,6 +48,7 @@
                   </div>
 
                   <div class="form-label-group">
+                    
                     <input
                       v-model="email"
                       type="email"
@@ -58,6 +59,7 @@
                       autofocus
                     />
                     <label for="inputEmail">Email</label>
+                   
                   </div>
 
                   <div class="form-label-group">
@@ -113,7 +115,6 @@
                   >
                     Connexion
                   </button>
-
                   <button
                     v-else
                     @click.prevent="createAccount()"
@@ -170,7 +171,8 @@ export default {
       }
     },
   },
-  methods: {
+  methods: { 
+    
     // SWITCHE ENTRE LOGIN ET SIGNUP
 
     switcheToCreateAccount() {
@@ -194,13 +196,13 @@ export default {
         .then((res) => {
           console.log(res.data);
           if (res === 201) {
-            swal({
+            this.$router.push("/login");
+            switcheToLogin;
+            return swal({
               title: "Felicitation!",
               text: "Votre compte est crée merci de s 'identifier ",
               icon: "success",
             });
-            this.$router.push("/login");
-            switcheToLogin;
           }
         })
         .catch(function (err) {
@@ -208,7 +210,7 @@ export default {
         });
     },
 
-    //LOGIN +  ENVOIE TOKEN+ID DANS LOCALSTORAGE
+    //LOGIN +  ENVOIE TOKEN + ID DANS LOCALSTORAGE
 
     loginAccount() {
       let User = {
@@ -232,6 +234,10 @@ export default {
 };
 </script>
 <style>
+
+.container{
+  min-height: 100vh;
+}
 .bloc {
   margin-bottom: 2rem;
   padding: 1rem;

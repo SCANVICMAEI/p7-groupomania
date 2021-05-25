@@ -5,6 +5,7 @@
     <ProfilUser />
 
     <Message />
+  
   </div>
 </template>
 
@@ -12,6 +13,7 @@
 import ProfilUser from "../components/ProfilUser.vue";
 import NavBar from "../components/NavBar.vue";
 import Message from "../components/Message.vue";
+import Comment from '../components/Comment.vue';
 
 
 // const axios = require("axios");
@@ -22,7 +24,7 @@ export default {
     ProfilUser,
     NavBar,
     Message,
-   
+    Comment,
   },
 
   mounted() {},
