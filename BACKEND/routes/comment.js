@@ -9,7 +9,7 @@ const commentCtrl = require('../controllers/comment');
 
 router.post('/:id',auth,commentCtrl.createComment);
 
-router.get('/',commentCtrl.allComment);
+router.get('/',auth,commentCtrl.allComment);
 
 router.delete('/:id',auth, commentCtrl.deleteComment);
 

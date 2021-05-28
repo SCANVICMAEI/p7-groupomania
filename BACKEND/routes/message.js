@@ -10,7 +10,7 @@ const messageCtrl = require('../controllers/message');
 
 router.post('/',auth,multer,messageCtrl.createMessage);
 
-router.get('/',messageCtrl.allMessage)
+router.get('/',auth,messageCtrl.allMessage)
 
 router.delete('/:id',auth, messageCtrl.deleteMessage);
 

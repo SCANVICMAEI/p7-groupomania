@@ -37,6 +37,7 @@ export default {
 
       this.userId = this.UserProfile.userId;
       this.token = this.UserProfile.token;
+      
 
       axios
         .get("http://localhost:3000/user/" + this.userId)

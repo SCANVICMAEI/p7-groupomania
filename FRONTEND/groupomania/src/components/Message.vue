@@ -7,11 +7,13 @@
       <textarea
         class="form-control z-depth-1"
         id="exampleFormControlTextarea6"
+        label="Nouveau Message"
         rows="1"
         placeholder="Ecrire Message"
+        v-model="newmessage"
       ></textarea>
 
-      <button @click="createMessage">
+      <button @click="createMessage()">
         <i class="fas fa-share"></i>
       </button>
 
@@ -21,7 +23,6 @@
     </div>
 
     <!--BOUCLE SUR LES MESSAGES  -->
-
     <div v-for="message in messages" :key="message" class="bloc Message">
       <ul class="list-group">
         <li class="list-group-item">
@@ -34,8 +35,7 @@
         </li>
       </ul>
 
-     <!--BOUCLE SUR LES COMMENTAIRE (voir components)  -->
-
+      <!--BOUCLE SUR LES COMMENTAIRES (voir components)  -->
       <comment
         v-for="comment in message.Comments"
         :key="comment"
@@ -43,7 +43,7 @@
         class="bloc Comment"
       />
 
-        <!--ECRIRE UN COMMENTAIRE  -->
+      <!--ECRIRE UN COMMENTAIRE  -->
       <div class="form-group shadow-textarea">
         <label for="exampleFormControlTextarea6"> </label>
         <textarea
@@ -51,9 +51,10 @@
           id="exampleFormControlTextarea6"
           rows="1"
           placeholder="Ecrire commentaire"
+          v-model="newcomment"
         ></textarea>
 
-        <button>
+        <button @click="createComment()">
           <i class="fas fa-share"></i>
         </button>
 
@@ -78,19 +79,38 @@ export default {
   data() {
     return {
       messages: "",
+      token:"",
+      isAdmin:"",
+      userId:"",
+      newmessage:"",
+      newcomment:"",
+      message:"",
+      comment:""
+    
     };
   },
 
   mounted() {
     this.TchatMessage();
-    this.deleteMessage;
   },
 
   methods: {
+
     //AFFICHAGE MESSAGE
+
     TchatMessage() {
+      let localstorage = JSON.parse(localStorage.getItem("User"));
+      this.token = localstorage.token;
+      this.isAdmin = localstorage.isAdmin;
+      this.userId = localstorage.userId
+     
+     let config = { 
+       headers: {
+        authorization: "Bearer: " + this.token
+       },
+     };
       axios
-        .get("http://localhost:3000/message")
+        .get("http://localhost:3000/message",config)
         .then((res) => {
           this.messages = res.data;
         })
@@ -102,29 +122,85 @@ export default {
 
     //SUPPRIMER MESSAGE
 
-    // deleteMessage(){
+    deleteMessage(messageId){
+      let localstorage = JSON.parse(localStorage.getItem("User"));
+      this.token = localstorage.token;
+      this.isAdmin = localstorage.isAdmin;
+      this.userId = localstorage.userId
 
-    //   let token = localStorage.getItem("token");
-    // axios.delete('http://localhost:3000/message',{params:{message.id}
-    // },{headers:{ authorization: token}},
+    let config = { 
+        headers: {
+        authorization: "Bearer: " + this.token
+        },
+    };
+    console.log(config),
+    axios.delete(`http://localhost:3000/message/${messageId}`,config)
+     .then((resp) => {
+     this.TchatMessage()
+     })
 
-    // )
-    //  .then(resp => resp.data)
-    //  },
+      .catch(function (err) {
+          console.log(err + "ERREUR delete MESSAGE");
+        });
+     },
 
     // POSTER UN MESSAGE
+
     createMessage() {
+       let localstorage = JSON.parse(localStorage.getItem("User"));
+      this.token = localstorage.token;
+      this.isAdmin = localstorage.isAdmin;
+      this.userId = localstorage.userId
+
+      let config = { 
+        headers: {
+        authorization: "Bearer: " + this.token
+        },
+    };
+     const message = this.newmessage
       axios
-        .post("http://localhost:3000/message")
+        .post(`http://localhost:3000/message`,{message},config)
         .then((res) => {
-          this.message = res.data;
+         console.log(res.data)
+        //  this.$router.push("/tchat")
+         this.TchatMessage()
         })
         .catch(function (err) {
-          console.log(err + "post message");
+          console.log(err + "createMessage");
+        });
+    },
+  
+
+  // POSTER UN COMMENTAIRE
+    createComment() {
+      let localstorage = JSON.parse(localStorage.getItem("User"));
+      this.token = localstorage.token;
+      this.isAdmin = localstorage.isAdmin;
+      this.userId = localstorage.userId
+
+      let config = { 
+        headers: {
+        authorization: "Bearer: " + this.token
+        },
+    };
+
+     let id = this.message.id
+     const comment = this.newcomment
+     console.log(id)
+     console.log(comment)
+      axios
+        .post(`http://localhost:3000/comment/${id}`,{comment},config)
+        .then((res) => {
+         console.log(res.data)
+         
+        })
+        .catch(function (err) {
+          console.log(err + "createComment");
         });
     },
   },
 };
+
 </script>
 
 <style scoped>

@@ -72,10 +72,11 @@ exports.signup = (req, res, next) => {
               console.log(user)
               res.status(200).json({
                 userId: user.id,
-                  //a ajouter is admin bolean
+                isAdmin : user.isAdmin,
                 token: jwt.sign({
                     userId: user.id
                   },
+                
                   `${process.env.TOP_SECRET}`, {
                     expiresIn: '24h'
                   } // expire 24 h

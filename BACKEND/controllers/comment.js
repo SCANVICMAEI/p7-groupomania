@@ -61,16 +61,38 @@ exports.allComment = (req, res, next) => {
 // SUPPRIMER UN COMMENTAIRE 
 
 exports.deleteComment = (req, res, next) => {
+
+  const token = req.headers.authorization.split(' ')[1]; // EXTRAIT LE TOKEN DE LA REQUETE
+  const decodedToken = jwt.verify(token, process.env.TOP_SECRET); // DECRYPTE AVEC CLES
+  const userId = decodedToken.userId;// RECUPERATION DU TOKEN 
   const id = req.params.id
-  Comment.destroy({
-      where: {
-        id: id
+  const isAdmin = decodedToken.isAdmin; // VERIFICATION IS ADMIN 
+  
+  Comment.findOne({
+    where: {id: id}
+  })
+    .then(comment => {
+      if (comment.idUser == userId || isAdmin== true ) { // SI LES ID SONT SIMILAIRE OU SI ADMIN EST TRUE
+
+        Comment.destroy({
+          where: {
+            id: id
+          }
+        })
+          .then(() => res.status(200).json({
+            message: 'commentaire supprimé !' + id
+          }))
+          .catch(error => res.status(400).json({
+            error
+          }));
+      }
+      else{
+        return res.status(401).json({error:"autorisation admin requis !"})
       }
     })
-    .then(() => res.status(200).json({
-      message: 'commentaire supprimé !' + id
-    }))
-    .catch(error => res.status(400).json({
-      error
-    }));
+    .catch((err) => {
+      res.status(400).json({
+        message: "Erreur deleteComment "
+      });
+    })
 };

@@ -15,7 +15,7 @@
         </li>
         <li class="nav-item">
           <router-link to="/" tag="button" class="nav-link"
-            >Déconnexion</router-link
+           @click="logout" >Déconnexion</router-link
           >
         </li>
       </ul>
@@ -26,6 +26,12 @@
 <script>
 export default {
   name: "NavBar",
+  methods: {
+    logout(){
+      localStorage.clear();
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
