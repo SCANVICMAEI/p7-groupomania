@@ -51,16 +51,17 @@
           id="exampleFormControlTextarea6"
           rows="1"
           placeholder="Ecrire commentaire"
-          v-model="newcomment"
+          v-model="newcomment[message.id]"
         ></textarea>
 
-        <button @click="createComment()">
+        <button @click="createComment(message.id)">
           <i class="fas fa-share"></i>
         </button>
 
         <button>
           <i class="fas fa-share-alt-square"></i>
         </button>
+
       </div>
     </div>
   </div>
@@ -83,8 +84,7 @@ export default {
       isAdmin:"",
       userId:"",
       newmessage:"",
-      newcomment:"",
-      message:"",
+      newcomment:[],
       comment:""
     
     };
@@ -112,6 +112,7 @@ export default {
       axios
         .get("http://localhost:3000/message",config)
         .then((res) => {
+          console.log(this.message)
           this.messages = res.data;
         })
 
@@ -162,8 +163,8 @@ export default {
         .post(`http://localhost:3000/message`,{message},config)
         .then((res) => {
          console.log(res.data)
-        //  this.$router.push("/tchat")
          this.TchatMessage()
+         this.newmessage=""
         })
         .catch(function (err) {
           console.log(err + "createMessage");
@@ -172,7 +173,7 @@ export default {
   
 
   // POSTER UN COMMENTAIRE
-    createComment() {
+    createComment(idmessage) {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
       this.isAdmin = localstorage.isAdmin;
@@ -182,22 +183,20 @@ export default {
         headers: {
         authorization: "Bearer: " + this.token
         },
-    };
-
-     let id = this.message.id
-     const comment = this.newcomment
-     console.log(id)
-     console.log(comment)
+      }
+     const comment = this.newcomment[idmessage]
       axios
-        .post(`http://localhost:3000/comment/${id}`,{comment},config)
+        .post(`http://localhost:3000/comment/${idmessage}`,{comment},config)
         .then((res) => {
-         console.log(res.data)
-         
+         console.log(comment)
+         this.TchatMessage()
+        //  this.newcomment[idmessage]= ""
         })
         .catch(function (err) {
           console.log(err + "createComment");
         });
     },
+
   },
 };
 
@@ -216,4 +215,5 @@ button {
   box-shadow: none;
   border: none;
 }
+
 </style>

@@ -3,6 +3,9 @@
     <NavBar />
 
     <ProfilUser />
+
+    
+   
   </div>
 </template>
 
@@ -18,6 +21,11 @@ export default {
   },
 
   mounted() {},
+  methods:{
+      NewProfil(){
+
+    }
+  }
 };
 </script>
 

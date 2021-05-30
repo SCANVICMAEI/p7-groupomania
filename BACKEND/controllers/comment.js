@@ -72,7 +72,7 @@ exports.deleteComment = (req, res, next) => {
     where: {id: id}
   })
     .then(comment => {
-      if (comment.idUser == userId || isAdmin== true ) { // SI LES ID SONT SIMILAIRE OU SI ADMIN EST TRUE
+      if (comment.UserId == userId || isAdmin == true ) { // SI LES ID SONT SIMILAIRE OU SI ADMIN EST TRUE
 
         Comment.destroy({
           where: {

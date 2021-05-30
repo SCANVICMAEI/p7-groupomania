@@ -4,11 +4,9 @@
        <ul class="list-group">
         <li class="list-group-item">
           {{content}} <br /> 
-
-           <button @click="deleteComment(id)">
+          <button @click="deleteComment(id)">
         <i class="fas fa-trash-alt"></i>
         </button>
-
         </li>
       </ul>
 </div>
@@ -38,13 +36,16 @@ export default {
   },
   data() {
     return{  
+    
   }
   },
    mounted() {
 
      },
-  // SUPPRIMER COMMENTAIRE
-deleteComment(id){
+  methods:{
+
+ // SUPPRIMER COMMENTAIRE
+  deleteComment(id){
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
       this.isAdmin = localstorage.isAdmin;
@@ -57,13 +58,14 @@ deleteComment(id){
     };
     console.log(config),
     axios.delete(`http://localhost:3000/comment/${id}`,config)
-     .then((resp) => {
-     
-     })
+      .then((resp) => {
+    window.location.reload()
+      })
       .catch(function (err) {
           console.log(err + "ERREUR delete comment");
         });
-     },
+      },
+  }
 };
 </script>
 <style scoped>

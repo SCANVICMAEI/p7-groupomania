@@ -2,12 +2,11 @@
 <template>
   <div class="row main">
     <div class="bloc profil col-3 ml-4 mt-4">
-      <ul class="list-group">
-        <img src="/public/icon.png" alt="" class="rounded img" />
+      <ul class="list-group text-center">
+         <li class="list-group-item">Bonjour {{ username }}</li>
         <li class="list-group-item">{{ email }}</li>
         <li class="list-group-item">{{ job }}</li>
         <li class="list-group-item">{{ bio }}</li>
-        <li class="list-group-item">{{ username }}</li>
       </ul>
     </div>
   </div>
@@ -34,7 +33,6 @@ export default {
     //AFFICHAGE PROFIL
     Profil() {
       this.UserProfile = JSON.parse(localStorage.getItem("User"));
-
       this.userId = this.UserProfile.userId;
       this.token = this.UserProfile.token;
       
@@ -52,6 +50,8 @@ export default {
           console.log(err + "ERREUR PROFIL");
         });
     },
+
+  
   },
   mounted() {
     this.Profil();
@@ -59,7 +59,10 @@ export default {
 
 };
 </script>
-
    <style scoped >
+   .main {
+  background-image: url("../assets/fond.jpg");
+  background-size: cover;
+}
 </style>
       
