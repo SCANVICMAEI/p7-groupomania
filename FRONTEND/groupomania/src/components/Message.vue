@@ -1,5 +1,5 @@
 <template>
-  <div class="bloc tchat col-7 mt-5">
+  <div class="bloc tchat ">
 
     <!--ECRIRE UN MESSAGE  -->
     <div class="form-group shadow-textarea">
@@ -13,21 +13,27 @@
         v-model="newmessage"
       ></textarea>
 
-      <button @click="createMessage()">
+      <button @click="createMessage(); createMessageImage()">
         <i class="fas fa-share"></i>
       </button>
 
-      <button>
+      <!-- <button @change="uploadImage()" type="file" accept=".jpg,.jpeg,.gif,.png">
         <i class="fas fa-share-alt-square"></i>
-      </button>
+      </button> -->
+      <label for="attachment"> <i class="fas fa-share-alt-square"></i></label>
+      <input type="file"
+       id="attachment" name="attachment"
+       accept=".png, .jpeg">
+
     </div>
 
     <!--BOUCLE SUR LES MESSAGES  -->
-    <div v-for="message in messages" :key="message" class="bloc Message">
+    <div v-for="message in messages" :key="message" class="bloc message">
       <ul class="list-group">
         <li class="list-group-item">
           Message de :{{ message.idUser }}<br />
           {{ message.message }}<br />
+          <img :src="message.attachment" class="image" alt="..">
           Le : {{ message.createdAt }}
           <button @click.prevent="deleteMessage(message.id)">
             <i class="fas fa-trash-alt"></i>
@@ -40,7 +46,7 @@
         v-for="comment in message.Comments"
         :key="comment"
         v-bind="comment"
-        class="bloc Comment"
+        class=" Comment"
       />
 
       <!--ECRIRE UN COMMENTAIRE  -->
@@ -71,6 +77,7 @@
 import Comment from "../components/Comment";
 
 const axios = require("axios");
+const FormData = require('form-data');
 export default {
   name: "Message",
   components: {
@@ -85,8 +92,8 @@ export default {
       userId:"",
       newmessage:"",
       newcomment:[],
-      comment:""
-    
+      content:"",
+      attachment:""
     };
   },
 
@@ -145,10 +152,10 @@ export default {
         });
      },
 
-    // POSTER UN MESSAGE
+    // POSTER UN MESSAGE TEXTE
 
     createMessage() {
-       let localstorage = JSON.parse(localStorage.getItem("User"));
+      let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
       this.isAdmin = localstorage.isAdmin;
       this.userId = localstorage.userId
@@ -157,8 +164,10 @@ export default {
         headers: {
         authorization: "Bearer: " + this.token
         },
-    };
+      };
      const message = this.newmessage
+     const formData = new FormData()
+     
       axios
         .post(`http://localhost:3000/message`,{message},config)
         .then((res) => {
@@ -172,6 +181,54 @@ export default {
     },
   
 
+
+// createMessageImage() {
+//       let localstorage = JSON.parse(localStorage.getItem("User"));
+//       this.token = localstorage.token;
+//       this.isAdmin = localstorage.isAdmin;
+//       this.userId = localstorage.userId
+
+//       let config = { 
+//         headers: {
+//         authorization: "Bearer: " + this.token
+//         },
+//     };
+//      const attachment = this.newattachment
+//       axios
+//         .post(`http://localhost:3000/message`,{attachment},config)
+//         .then((res) => {
+//          console.log(res.data)
+//         //  this.TchatMessage()
+//         //  this.newmessage=""
+//         })
+//         .catch(function (err) {
+//           console.log(err + "createMessageImage");
+//         });
+//     },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // POSTER UN COMMENTAIRE
     createComment(idmessage) {
       let localstorage = JSON.parse(localStorage.getItem("User"));
@@ -184,13 +241,13 @@ export default {
         authorization: "Bearer: " + this.token
         },
       }
-     const comment = this.newcomment[idmessage]
+     const content = this.newcomment[idmessage]
       axios
-        .post(`http://localhost:3000/comment/${idmessage}`,{comment},config)
+        .post(`http://localhost:3000/comment/${idmessage}`,{content},config)
         .then((res) => {
-         console.log(comment)
+         
          this.TchatMessage()
-        //  this.newcomment[idmessage]= ""
+         this.newcomment[idmessage]= ""
         })
         .catch(function (err) {
           console.log(err + "createComment");
@@ -203,17 +260,28 @@ export default {
 </script>
 
 <style scoped>
-.tchat {
-  margin: auto;
-  background-color: white;
-  border: none;
-  box-shadow: none;
-}
+
 
 button {
   background: none;
   box-shadow: none;
   border: none;
 }
+  
+
+.tchat{
+ background-color:#DCDCDC;
+ margin: 1rem;
+
+}
+
+li{
+  border-color: brown;
+}
+.list-group-item{
+  border-radius: 20px;
+}
+
+
 
 </style>

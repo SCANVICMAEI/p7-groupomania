@@ -2,7 +2,7 @@
 <div>
    <!--BOUCLE SUR LES COMMENTAIRE -->
        <ul class="list-group">
-        <li class="list-group-item">
+        <li class="list-group-item commentaires">
           {{content}} <br /> 
           <button @click="deleteComment(id)">
         <i class="fas fa-trash-alt"></i>
@@ -74,6 +74,10 @@ button{
   box-shadow: none;
   border: none;
   padding: 0%;
+}
+.list-group-item{
+  border-radius: 20px;
+  margin: 1rem;
 }
 
 </style>

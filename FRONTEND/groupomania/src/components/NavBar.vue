@@ -1,5 +1,5 @@
 <template>
-  <div class="NavBar">
+  <div class="NavBar ">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
       <img
         class="navbar-brand"
@@ -36,11 +36,14 @@ export default {
 </script>
 
 <style scoped>
-.main {
+/* .main {
   background-image: url("../assets/fond.jpg");
   background-size: cover;
-}
-.navbar {
+} */
+/* .navbar {
   height: 5rem;
+} */
+.navbar{
+  width: 100%;
 }
 </style>
