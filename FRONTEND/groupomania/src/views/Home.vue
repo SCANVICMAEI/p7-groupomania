@@ -15,14 +15,14 @@
                 <h2 class="login-heading mb-4" v-else>S'inscrire</h2>
                 <p v-if="mode == 'login'">
                   Pas encore inscrit ?
-                  <button class="switche" @click="switcheToCreateAccount()">
+                  <button class="switche" @click="switchToCreateAccount()">
                     Je minscrit
                   </button>
                 </p>
 
                 <p v-else>
                   Deja inscrit ?
-                  <button class="switche" @click="switcheToLogin()">
+                  <button class="switche" @click="switchToLogin()">
                     Je m identifie
                   </button>
                 </p>
@@ -48,7 +48,6 @@
                   </div>
 
                   <div class="form-label-group">
-                    
                     <input
                       v-model="email"
                       type="email"
@@ -59,7 +58,6 @@
                       autofocus
                     />
                     <label for="inputEmail">Email</label>
-                   
                   </div>
 
                   <div class="form-label-group">
@@ -171,14 +169,13 @@ export default {
       }
     },
   },
-  methods: { 
-    
-    // SWITCHE ENTRE LOGIN ET SIGNUP
+  methods: {
+    // SWITCH ENTRE LOGIN ET SIGNUP
 
-    switcheToCreateAccount() {
+    switchToCreateAccount() {
       this.mode = "create";
     },
-    switcheToLogin() {
+    switchToLogin() {
       this.mode = "login";
     },
 
@@ -197,15 +194,12 @@ export default {
           console.log(res.data);
           if (res === 201) {
             this.$router.push("/login");
-            switcheToLogin;
-            return swal({
-              title: "Felicitation!",
-              text: "Votre compte est crée merci de s 'identifier ",
-              icon: "success",
-            });
+            switchToLogin();
+           
           }
         })
         .catch(function (err) {
+          swal("Compte déja existant ou champs invalide");
           console.log(err);
         });
     },
@@ -227,6 +221,7 @@ export default {
           }
         })
         .catch(function (err) {
+          swal("Compte déja existant ou champs invalide");
           console.log(err + "login hs");
         });
     },
@@ -234,8 +229,7 @@ export default {
 };
 </script>
 <style>
-
-.container{
+.container {
   min-height: 100vh;
 }
 .bloc {

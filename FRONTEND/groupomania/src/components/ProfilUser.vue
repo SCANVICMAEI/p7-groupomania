@@ -1,9 +1,9 @@
 
 <template>
   <div class="row main">
-    <div class="bloc profil ">
+    <div class="bloc profil">
       <ul class="list-group text-center">
-         <li class="list-group-item">Bonjour {{ username }}</li>
+        <li class="list-group-item">Bonjour {{ username }}</li>
         <li class="list-group-item">{{ email }}</li>
         <li class="list-group-item">{{ job }}</li>
         <li class="list-group-item">{{ bio }}</li>
@@ -30,12 +30,11 @@ export default {
   },
 
   methods: {
-    //AFFICHAGE PROFIL
+    //AFFICHAGE PROFIL STOCKER DANS LE LOCALSTORAGE
     Profil() {
       this.UserProfile = JSON.parse(localStorage.getItem("User"));
       this.userId = this.UserProfile.userId;
       this.token = this.UserProfile.token;
-      
 
       axios
         .get("http://localhost:3000/user/" + this.userId)
@@ -50,19 +49,12 @@ export default {
           console.log(err + "ERREUR PROFIL");
         });
     },
-
-  
   },
   mounted() {
     this.Profil();
   },
-
 };
 </script>
    <style scoped >
-   /* .main {
-  background-image: url("../assets/fond.jpg");
-  background-size: cover;
-} */
 </style>
       
