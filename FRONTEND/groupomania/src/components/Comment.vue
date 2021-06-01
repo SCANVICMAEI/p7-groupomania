@@ -19,12 +19,9 @@ const axios = require("axios");
 
 export default {
   name: "Comment",
+  emits:["reloadMessages"],
   props: {
     id: {
-      type: Number,
-      required: true,
-    },
-    UserId: {
       type: Number,
       required: true,
     },
@@ -58,25 +55,21 @@ export default {
         },
       };
       console.log(config),
-      axios
-      .delete(`http://localhost:3000/comment/${id}`, config)
-      .then((resp) => {
-        window.location.reload();
-      })
-      .catch(function (err) {
-        swal("Vous n'avez pas l autorisation d'effacer ce commentaire !!");
-        console.log(err + "ERREUR delete comment");
-      });
-    },//FIN DELETECOMMENT
-
-  },//FIN METHODS
-
+        axios
+          .delete(`http://localhost:3000/comment/${id}`, config)
+          .then((resp) => {
+            this.$emit("reloadMessages")
+          })
+          .catch(function (err) {
+            swal("Vous n'avez pas l autorisation d'effacer ce commentaire !!");
+            console.log(err + "ERREUR delete comment");
+          });
+    }, //FIN DELETECOMMENT
+  }, //FIN METHODS
 }; // FIN EXPORT DEFAULT
-
 </script>
 
 <style scoped>
-
 button {
   background: none;
   box-shadow: none;
@@ -87,5 +80,4 @@ button {
   border-radius: 20px;
   margin: 1rem;
 }
-
 </style>

@@ -221,7 +221,7 @@ export default {
           }
         })
         .catch(function (err) {
-          swal("Compte déja existant ou champs invalide");
+          swal("Compte inexistant ou champs invalide");
           console.log(err + "login hs");
         });
     },

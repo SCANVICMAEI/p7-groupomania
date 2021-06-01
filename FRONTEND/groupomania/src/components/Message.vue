@@ -13,10 +13,17 @@
       ></textarea>
 
       <!--EVENEMENT APEL CREATMESSAGE  -->
-      <button @click="createMessage()">
+      <button @click="submitFile()">
         <i class="fas fa-share"></i>
       </button>
+
+      <!--EVENEMENT APEL CREATMESSAGE AJOUTER IMAGE  -->
     </div>
+
+    <label
+      >joindre
+      <input type="file" id="file" v-on:change="handleFileUpload()" />
+    </label>
 
     <!--BOUCLE SUR LES MESSAGES  -->
     <div v-for="message in messages" :key="message" class="bloc message">
@@ -24,6 +31,7 @@
         <li class="list-group-item">
           Message de :{{ message.idUser }}<br />
           {{ message.message }}<br />
+          <img :src="message.attachment" />
           Le : {{ message.createdAt }}
 
           <!--EVENEMENT APEL DELETEMESSAGE  -->
@@ -39,6 +47,7 @@
         :key="comment"
         v-bind="comment"
         class="Comment"
+        v-on:reload-messages="TchatMessage"
       />
 
       <!--ECRIRE UN COMMENTAIRE  -->
@@ -56,16 +65,12 @@
         <button @click="createComment(message.id)">
           <i class="fas fa-share"></i>
         </button>
-        <button>
-          <i class="fas fa-share-alt-square"></i>
-        </button>
       </div>
     </div>
   </div>
 </template>
   
 <script>
-
 // IMPORT COMPONENTS
 import Comment from "../components/Comment";
 
@@ -88,8 +93,7 @@ export default {
       newmessage: "",
       newcomment: [],
       content: "",
-      attachment: "",
-      file:"", //TEST
+      file: "",
     };
   },
 
@@ -99,7 +103,6 @@ export default {
   },
 
   methods: {
-
     //AFFICHAGE MESSAGE
     TchatMessage() {
       let localstorage = JSON.parse(localStorage.getItem("User"));
@@ -115,14 +118,13 @@ export default {
       axios
         .get("http://localhost:3000/message", config)
         .then((res) => {
-          console.log(this.message);
           this.messages = res.data;
         })
 
         .catch(function (err) {
           console.log(err + "ERREUR MESSAGE");
         });
-    },//TCHATMESSAGE
+    }, //TCHATMESSAGE
 
     //SUPPRIMER MESSAGE
     deleteMessage(messageId) {
@@ -147,67 +149,71 @@ export default {
             swal("Vous n'avez pas l autorisation d'effacer ce message !!");
             console.log(err + "ERREUR delete MESSAGE");
           });
-    },//FIN DELETEMESSAGE
+    }, //FIN DELETEMESSAGE
 
     // POSTER UN MESSAGE TEXTE
-    createMessage() {
+    // createMessage() {
+    //   let localstorage = JSON.parse(localStorage.getItem("User"));
+    //   this.token = localstorage.token;
+    //   this.isAdmin = localstorage.isAdmin;
+    //   this.userId = localstorage.userId;
+
+    //   let config = {
+    //     headers: {
+    //       authorization: "Bearer: " + this.token,
+    //     },
+    //   };
+
+    //   const message = this.newmessage;
+    //   axios
+    //     .post(`http://localhost:3000/message`, { message }, config)
+    //     .then((res) => {
+    //       console.log(res.data);
+    //       this.TchatMessage();
+    //       this.newmessage = "";
+    //     })
+    //     .catch(function (err) {
+    //       console.log(err + "createMessage");
+    //     });
+    // },
+
+    //TESTE !!!!!!!!!!!!!! POST IMAGE
+    submitFile() {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
       this.isAdmin = localstorage.isAdmin;
       this.userId = localstorage.userId;
 
-      let config = {
-        headers: {
-          authorization: "Bearer: " + this.token,
-        },
-      };
+      // INITIALISE FORM DATA
+      let formData = new FormData();
 
-      const message = this.newmessage;
+      //AJOUTE FORM DATA AVEC CONETNUE
+      formData.append("attachment", this.file);
+      formData.append("message", this.newmessage);
+      console.log(formData);
+      //REQUETE
       axios
-        .post(`http://localhost:3000/message`, { message }, config)
-        .then((res) => {
-          console.log(res.data);
-          this.TchatMessage();
-          this.newmessage = "";
+        .post(`http://localhost:3000/message`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            authorization: "Bearer: " + this.token,
+          },
         })
-        .catch(function (err) {
-          console.log(err + "createMessage");
-        });
-    },//FIN CREATMESSAGE
-
-    // POSTER UN MESSAGE TEXTE AVEC IMAGE TEST
-    // handleFileUpload(){
-    //   this.file = this.$refs.file.files[0];
-    // }
-
-
-
-
-
-    createMessage() {
-      let localstorage = JSON.parse(localStorage.getItem("User"));
-      this.token = localstorage.token;
-      this.isAdmin = localstorage.isAdmin;
-      this.userId = localstorage.userId;
-
-      let config = {
-        headers: {
-          authorization: "Bearer: " + this.token,
-        },
-      };
-
-      const message = this.newmessage;
-      axios
-        .post(`http://localhost:3000/message`, { message }, config)
         .then((res) => {
-          console.log(res.data);
-          this.TchatMessage();
+          this.file = "";
           this.newmessage = "";
+          this.TchatMessage();
+          console.log(res.data);
         })
-        .catch(function (err) {
-          console.log(err + "createMessage");
+        .catch(function (resultat) {
+          console.log(resultat);
         });
-    },//FIN CREATMESSAGE TEST
+    },
+
+    //GERE MODIF SUR LE CHARGELENT DU FICHIER
+    handleFileUpload() {
+      this.file = document.getElementById("file").files[0];
+    }, //FIN CREATMESSAGE TEST
 
     // POSTER UN COMMENTAIRE
     createComment(idmessage) {
@@ -219,7 +225,6 @@ export default {
       let config = {
         headers: {
           authorization: "Bearer: " + this.token,
-
         },
       };
       const content = this.newcomment[idmessage];
@@ -232,12 +237,9 @@ export default {
         .catch(function (err) {
           console.log(err + "createComment");
         });
-    },//FIN CREATCOMMENT
-
-  },//FIN METHODS
-
-};// FIN EXPORT DEFAULT
-
+    }, //FIN CREATCOMMENT
+  }, //FIN METHODS
+}; // FIN EXPORT DEFAULT
 </script>
 
 <style scoped>
@@ -256,6 +258,12 @@ li {
   border-color: brown;
 }
 .list-group-item {
+  border-radius: 20px;
+}
+
+img {
+  width: 8rem;
+  height: 8rem;
   border-radius: 20px;
 }
 </style>
