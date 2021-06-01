@@ -1,6 +1,6 @@
 
 <template>
-  <div class="row main">
+  <div >
     <div class="bloc profil">
       <ul class="list-group text-center">
         <li class="list-group-item">Bonjour {{ username }}</li>
@@ -56,5 +56,9 @@ export default {
 };
 </script>
    <style scoped >
+   .bloc{
+     width: 80%;
+     margin: auto;
+   }
 </style>
       

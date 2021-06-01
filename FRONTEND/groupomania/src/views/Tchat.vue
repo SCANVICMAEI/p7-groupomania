@@ -5,7 +5,7 @@
     </div>
 
     <div class="container-fluide row">
-      <div class="col-3 Profil">
+      <div class="col-xl-3 col-lg-3 col-md-3  Profil">
         <ProfilUser />
       </div>
 

@@ -4,40 +4,23 @@
       <NavBar />
     </div>
 
-    <div class="container-fluide row">
-      <div class="col-7 Profil">
+    <div class="profil">
+      <div class="col-7 col-lg-4 col-xl-4 profiluser">
         <ProfilUser />
       </div>
 
-<!-- CHANGEMENT PROFIL -->
-      <div class="col bloc profil">
+      <!-- CHANGEMENT PROFIL -->
+      <div class="col-8 col-lg-5 col-xl-5 bloc">
         <form class="NewProfil">
           <!-- CHANGEMENT PSEUDO -->
           <div>
-            <label for="inputtexte">Nouveau Pseudo</label>
+            <label for="inputtexte"></label>
             <input
-              v-model="nexUsername"
+              v-model="username"
               type="texte"
               id="inputtexte"
               class="form-control"
-              placeholder="Pseudo"
-              minlength="3"
-              maxlength="10"
-              pattern="[A-z-_ çàâéèeîïù]{2,30}"
-              required
-              autofocus
-            />
-          </div>
-
-          <!-- CHANGEMENT EMAIL -->
-          <div>
-            <label for="inputtexte">Nouvelle Email</label>
-            <input
-              v-model="newEmail"
-              type="texte"
-              id="inputtexte"
-              class="form-control"
-              placeholder="bio"
+              placeholder=" Nouveau Pseudo"
               minlength="3"
               maxlength="10"
               pattern="[A-z-_ çàâéèeîïù]{2,30}"
@@ -48,13 +31,13 @@
 
           <!-- CHANGEMENT BIO -->
           <div>
-            <label for="inputtexte">Nouvelle bio</label>
+            <label for="inputtexte"></label>
             <input
-              v-model="newBio"
+              v-model="bio"
               type="texte"
               id="inputtexte"
               class="form-control"
-              placeholder="bio"
+              placeholder="Nouvelle bio"
               minlength="3"
               maxlength="10"
               pattern="[A-z-_ çàâéèeîïù]{2,30}"
@@ -64,14 +47,14 @@
           </div>
 
           <!-- CHANGEMENT JOB -->
-          <div>
-            <label for="inputtexte">Nouveau job</label>
+          <div class="mb-3">
+            <label for="inputtexte"></label>
             <input
-              v-model="newJob"
+              v-model="job"
               type="texte"
               id="inputtexte"
               class="form-control"
-              placeholder="bio"
+              placeholder="Nouveau job"
               minlength="3"
               maxlength="10"
               pattern="[A-z-_ çàâéèeîïù]{2,30}"
@@ -80,19 +63,20 @@
             />
           </div>
           <input
-        type="submit"
-        value="Valider les modifications de mon compte"
-        @click="NewProfil()"
-      /><br>
-      ou <br>
-<input
-          type="submit"
-          value="Supprimer mon compt"
-          @click="deleteProfil()"
-        />
+            type="submit"
+            value="Valider les modifications"
+            class="valider"
+            @click="NewProfil()"
+          /><br />
+          ou <br />
+          <input
+            type="submit"
+            value="Supprimer mon compt"
+            class="supprimer"
+            @click="deleteProfil()"
+          />
         </form>
       </div>
-      
     </div>
   </div>
 </template>
@@ -113,11 +97,14 @@ export default {
   data() {
     return {
       UserProfile: [],
+      username: "",
+      bio: "",
+      job: "",
     };
   },
 
   mounted() {},
-  
+
   methods: {
     //CHANGEMENT PROFIL
     NewProfil() {
@@ -131,14 +118,21 @@ export default {
           authorization: "Bearer: " + this.token,
         },
       };
+      let newProfil = {
+        username: this.username,
+        bio: this.bio,
+        job: this.job,
+      };
 
       axios
-        .put(`http://localhost:3000/user/${this.userId}`, config)
+        .put(`http://localhost:3000/user/${this.userId}`, newProfil, config)
         .then((resp) => {
+          swal("Compte modifier");
           window.location.reload();
         })
         .catch(function (err) {
-          console.log(err + "ERREUR delete comment");
+          swal("Erreur champs invalide");
+          console.log(err + "ERREUR NewProfil");
         });
     },
 
@@ -158,7 +152,7 @@ export default {
         .delete(`http://localhost:3000/user/${this.userId}`, config)
         .then((resp) => {
           swal("compte supprimer");
-          // this.$router.push("/login");
+          this.$router.push("/login");
         })
         .catch(function (err) {
           console.log(err + "ERREUR delete profil");
@@ -169,4 +163,34 @@ export default {
 </script>
 
 <style scoped>
+.profil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-image: url("../assets/fond2jpg.jpg");
+}
+
+.profiluser {
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+}
+
+.valider, .supprimer {
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.valider:hover {
+  color: brown;
+}
+
+.supprimer:hover {
+  color: brown;
+}
+
+
+
+
 </style>

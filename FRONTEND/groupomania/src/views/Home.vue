@@ -195,7 +195,6 @@ export default {
           if (res === 201) {
             this.$router.push("/login");
             switchToLogin();
-           
           }
         })
         .catch(function (err) {

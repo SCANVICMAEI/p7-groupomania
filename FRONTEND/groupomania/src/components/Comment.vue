@@ -1,11 +1,11 @@
 <template>
   <!--BOUCLE SUR LES COMMENTAIRE -->
-  <div>
-    <ul class="list-group">
-      <li class="list-group-item commentaires">
+  <div >
+    <ul class="list-group ">
+      <li class="list-group-item commentaires ">
         {{ content }} <br />
         <button @click="deleteComment(id)">
-          <i class="fas fa-trash-alt"></i>
+          <i class="fas fa-trash-alt trash"></i>
         </button>
       </li>
     </ul>
@@ -77,7 +77,14 @@ button {
   padding: 0%;
 }
 .list-group-item {
-  border-radius: 20px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  border-top-left-radius: 25px;
   margin: 1rem;
+}
+.commentaires{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>

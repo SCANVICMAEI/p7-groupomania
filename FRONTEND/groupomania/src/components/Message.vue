@@ -18,26 +18,31 @@
       </button>
 
       <!--EVENEMENT APEL CREATMESSAGE AJOUTER IMAGE  -->
-    </div>
-
-    <label
-      >joindre
-      <input type="file" id="file" v-on:change="handleFileUpload()" />
+      <label>
+      <i class="fas fa-paperclip"></i><input type="file" id="file" v-on:change="handleFileUpload()" />
     </label>
+    </div>
+    
 
     <!--BOUCLE SUR LES MESSAGES  -->
     <div v-for="message in messages" :key="message" class="bloc message">
       <ul class="list-group">
-        <li class="list-group-item">
-          Message de :{{ message.idUser }}<br />
-          {{ message.message }}<br />
-          <img :src="message.attachment" />
-          Le : {{ message.createdAt }}
+        <li class="list-group-item info text-left">
+          Message de :{{ message.idUser }} 
+           <br />
+          Le : {{ message.createdAt }}<br />
+       
+           <!--EVENEMENT APEL DELETEMESSAGE  -->
+      
+         <button @click.prevent="deleteMessage(message.id)">
+            <i class="fas fa-trash-alt "></i>
+          </button> 
 
-          <!--EVENEMENT APEL DELETEMESSAGE  -->
-          <button @click.prevent="deleteMessage(message.id)">
-            <i class="fas fa-trash-alt"></i>
-          </button>
+        </li>
+        
+        <li class="list-group-item message text-center">
+          <img :src="message.attachment" /> <br />
+          {{ message.message }}
         </li>
       </ul>
 
@@ -151,31 +156,6 @@ export default {
           });
     }, //FIN DELETEMESSAGE
 
-    // POSTER UN MESSAGE TEXTE
-    // createMessage() {
-    //   let localstorage = JSON.parse(localStorage.getItem("User"));
-    //   this.token = localstorage.token;
-    //   this.isAdmin = localstorage.isAdmin;
-    //   this.userId = localstorage.userId;
-
-    //   let config = {
-    //     headers: {
-    //       authorization: "Bearer: " + this.token,
-    //     },
-    //   };
-
-    //   const message = this.newmessage;
-    //   axios
-    //     .post(`http://localhost:3000/message`, { message }, config)
-    //     .then((res) => {
-    //       console.log(res.data);
-    //       this.TchatMessage();
-    //       this.newmessage = "";
-    //     })
-    //     .catch(function (err) {
-    //       console.log(err + "createMessage");
-    //     });
-    // },
 
     //TESTE !!!!!!!!!!!!!! POST IMAGE
     submitFile() {
@@ -243,22 +223,34 @@ export default {
 </script>
 
 <style scoped>
+
 button {
   background: none;
   box-shadow: none;
-  border: none;
+  border: 0px;
 }
 
 .tchat {
   background-color: #dcdcdc;
   margin: 1rem;
 }
+.message{
+border-right-color: brown;
+border-left-color: brown;
+border-bottom-color: brown;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
+border: 2px solid brown;
+/* flex-wrap: wrap;
+display: flex; */
 
-li {
-  border-color: brown;
 }
-.list-group-item {
-  border-radius: 20px;
+
+.info{
+  border-color: brown;
+  border-top-right-radius: 20px;
+ border-top-left-radius: 20px;
+ border: 2px solid brown;
 }
 
 img {
@@ -266,4 +258,10 @@ img {
   height: 8rem;
   border-radius: 20px;
 }
+
+.trash{
+  text-decoration: none;
+}
+
+
 </style>
