@@ -1,10 +1,8 @@
 const {Sequelize,DataTypes} = require('sequelize');
 require('dotenv').config();
 
-// connection bdd
+// CONNEXION BDD
 const database = new Sequelize (`mysql://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_DATABASE}`);
-
-// const database = new Sequelize (`mysql://root:121117@localhost:3306/groupomania`);
 
 database.authenticate()
 .then(() => console.log("connection ok !!!"))

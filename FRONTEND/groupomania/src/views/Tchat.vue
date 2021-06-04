@@ -17,7 +17,9 @@
 </template>
 
 <script>
+
 // IMPORT COMPONENTS
+
 import ProfilUser from "../components/ProfilUser.vue";
 import NavBar from "../components/NavBar.vue";
 import Message from "../components/Message.vue";
@@ -40,6 +42,5 @@ export default {
   padding-left: 3rem;
   padding-top: 4rem;
   background-image: url("../assets/fond.jpg");
-  background-repeat: repeat;
 }
 </style>

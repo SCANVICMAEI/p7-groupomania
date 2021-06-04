@@ -10,9 +10,11 @@
       </div>
 
       <!-- CHANGEMENT PROFIL -->
+
       <div class="col-8 col-lg-5 col-xl-5 bloc">
         <form class="NewProfil">
           <!-- CHANGEMENT PSEUDO -->
+
           <div>
             <label for="inputusername">username</label>
             <input
@@ -30,6 +32,7 @@
           </div>
 
           <!-- CHANGEMENT BIO -->
+
           <div>
             <label for="inputbio">bio</label>
             <input
@@ -46,6 +49,7 @@
           </div>
 
           <!-- CHANGEMENT JOB -->
+
           <div class="mb-3">
             <label for="inputjob">Nouveau job</label>
             <input
@@ -105,6 +109,7 @@ export default {
 
   methods: {
     //CHANGEMENT PROFIL
+
     NewProfil() {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
@@ -129,12 +134,13 @@ export default {
           this.$router.push("/Tchat");
         })
         .catch(function (err) {
-          swal("Erreur champs invalide");
+          swal("Erreur champs invalides");
           console.log(err + "ERREUR NewProfil");
         });
     },
 
     //SUPPRESSION COMPTE USER
+
     deleteProfil() {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
@@ -149,7 +155,13 @@ export default {
       axios
         .delete(`http://localhost:3000/user/${this.UserId}`, config)
         .then((resp) => {
-          swal("compte supprimer");
+          swal({
+            title: "Compte Supprimé!",
+            text: "Vous pouvez vous réinscrire",
+            icon: "success",
+            button: "OK",
+            position: "top-end",
+          });
           this.$router.push("/");
         })
         .catch(function (err) {
@@ -167,6 +179,8 @@ export default {
   align-items: center;
   text-align: center;
   background-image: url("../assets/fond2jpg.jpg");
+  background-size: cover;
+  min-height: calc(100vh - 150px);
 }
 
 .profiluser {

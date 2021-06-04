@@ -21,7 +21,6 @@ module.exports = {
 
       },
       UserId: {
-        //LIEN 
         onDelete: "CASCADE",
         type: Sequelize.INTEGER,
         references: {

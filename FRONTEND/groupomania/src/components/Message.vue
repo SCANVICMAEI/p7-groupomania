@@ -1,6 +1,8 @@
 <template>
   <div class="bloc tchat">
+
     <!--ECRIRE UN MESSAGE  -->
+
     <div class="form-group shadow-textarea">
       <label for="Champ-nouveau-Message"> Nouveau message</label>
       <textarea
@@ -15,19 +17,20 @@
         required
       ></textarea>
 
-      <!--EVENEMENT APEL CREATMESSAGE  -->
+      <!--EVENEMENT submitFile  -->
 
       <button
         class="Envoyer"
         type="submit"
-        id="submit message"
+        id="submit-message"
         @click="submitFile()"
         value="Envoyer"
+        :aria-label="'Poster un message '"
       >
         <i class="fas fa-share"></i></button
       ><br />
 
-      <!--EVENEMENT APEL CREATMESSAGE AJOUTER IMAGE  -->
+      
       <label for="file">Joindre</label>
       <i class="fas fa-paperclip"></i>
       <input type="file" id="file" v-on:change="handleFileUpload()" />
@@ -37,6 +40,7 @@
     <div v-for="message in messages" :key="message" class="bloc">
       <div class="list-group">
         <div class="list-group-item info messageTop">
+
           <!--EVENEMENT APEL DELETEMESSAGE  -->
 
           <button
@@ -48,7 +52,7 @@
           >
             <i class="fas fa-trash-alt"></i></button
           ><br />
-
+            <!--  ENTETE AFFICHAGE MESSAGE-->
           Message de {{ message.User.username }}
           <br />
         </div>
@@ -78,11 +82,13 @@
 
       <!--ECRIRE UN COMMENTAIRE  -->
       <div class="form-group shadow-textarea">
-        <label for="Champ-nouveau-Commentaire"> Nouveau commentaire</label>
+        <label :for="'Champ-nouveau-Commentaire' + message.id">
+          Nouveau commentaire</label
+        >
         <textarea
           label="Nouveau commentaire "
           class="form-control z-depth-1"
-          id="Champ-nouveau-Commentaire"
+          :id="'Champ-nouveau-Commentaire' + message.id"
           rows="2"
           minlength="2"
           placeholder="Ecrire commentaire"
@@ -95,9 +101,9 @@
         <button
           class="Envoyer"
           type="submit"
-          id="submit commente"
           @click="createComment(message.id)"
           value="Envoyer"
+          :aria-label="'Poster un commentaire pour le message ' + message.id"
         >
           <i class="fas fa-share"></i></button
         ><br />
@@ -109,6 +115,7 @@
 <script>
 // IMPORT COMPONENTS
 import Comment from "../components/Comment";
+
 // IMPORT SWEET ALERT + AXIOS
 import swal from "sweetalert";
 const axios = require("axios");
@@ -141,7 +148,9 @@ export default {
   },
 
   methods: {
+
     //AFFICHAGE MESSAGE
+
     TchatMessage() {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
@@ -162,9 +171,10 @@ export default {
         .catch(function (err) {
           console.log(err + "ERREUR MESSAGE");
         });
-    }, //TCHATMESSAGE
+    }, // FIN TCHATMESSAGE
 
     //SUPPRIMER MESSAGE
+
     deleteMessage(messageId) {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
@@ -183,11 +193,17 @@ export default {
         })
 
         .catch(function (err) {
-          swal("Vous n'avez pas l autorisation d'effacer ce message !!");
+          swal({
+            title: "Aïe!",
+            text: "Vous n'avez pas l'autorisation d'effacer ce message !",
+            icon: "warning",
+            button: "ok",
+          });
         });
     }, //FIN DELETEMESSAGE
 
     //POSTER UN MESSAGE
+
     submitFile() {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
@@ -197,7 +213,7 @@ export default {
       // INITIALISE FORM DATA
       let formData = new FormData();
 
-      //AJOUTE FORM DATA AVEC CONETNUE
+      //AJOUTE FORM DATA AVEC CONTENU
       if (this.file !== null) {
         formData.append("attachment", this.file);
       }
@@ -205,7 +221,7 @@ export default {
       if (this.newmessage !== null) {
         formData.append("message", this.newmessage);
       }
-      //REQUETE
+     
       if (this.newmessage !== null || this.file !== null) {
         axios
           .post(`http://localhost:3000/message`, formData, {
@@ -216,7 +232,9 @@ export default {
           })
           .then((res) => {
             this.file = "";
+            document.getElementById("file").value = null;
             this.newmessage = "";
+
             this.TchatMessage();
             console.log(res.data);
           })
@@ -224,14 +242,16 @@ export default {
             console.log(resultat);
           });
       }
-    },
+    },//FIN SUBMITFILE
 
     //GERE MODIF SUR LE CHARGELENT DU FICHIER
+
     handleFileUpload() {
       this.file = document.getElementById("file").files[0];
     }, //FIN CREATMESSAGE TEST
 
-    // POSTER UN COMMENTAIRE
+    // POSTE UN COMMENTAIRE
+
     createComment(idmessage) {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
@@ -323,5 +343,9 @@ img {
 
 label {
   display: none;
+}
+
+textarea {
+  margin-top: 2rem;
 }
 </style>

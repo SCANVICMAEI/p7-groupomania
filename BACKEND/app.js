@@ -7,7 +7,7 @@ const path = require('path');
 
 const mysql2 = require('mysql2');
 
-require('dotenv').config(); //pour definir les variables d environnement 
+require('dotenv').config(); 
 
 // Importation des  routes
 
@@ -17,15 +17,8 @@ const userRoutes = require ('./routes/user');
 
 const messageRoutes = require('./routes/message');
 
-// Mise en place securité
 
-// var Ddos = require('ddos') //denis service
-
-// var ddos = new Ddos({burst:10, limit:15})
-
-// app.use(ddos.express);
-
-const helmet = require('helmet'); //definit les entetes HTTP
+const helmet = require('helmet'); 
 
  // entetes http
 app.use((req, res, next) => {
@@ -35,7 +28,7 @@ app.use((req, res, next) => {
     next();
   });
 
-app.use(express.urlencoded({extended: true})); //remplace bodyParser
+app.use(express.urlencoded({extended: true})); 
 
 app.use(express.json());
 

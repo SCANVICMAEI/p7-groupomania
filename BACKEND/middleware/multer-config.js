@@ -7,7 +7,7 @@ const MIME_TYPES = {
   'image/gif': 'gif'
 };
 
-const controllerimages = 1 * 1024 * 1024 ; //1db
+const controllerimages = 1 * 1024 * 1024; //1db
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 
 module.exports = multer({
   storage: storage,
-  limits: { 
-  fileSize: controllerimages
+  limits: {
+    fileSize: controllerimages
   }
 }).single('attachment');

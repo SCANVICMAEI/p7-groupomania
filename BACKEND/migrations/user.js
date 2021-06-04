@@ -7,12 +7,12 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        onDelete:"CASCADE",
+        onDelete: "CASCADE",
       },
       email: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique:true
+        unique: true
       },
       username: {
         allowNull: false,
@@ -38,7 +38,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      isAdmin:{
+      isAdmin: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
         defaultValue: false

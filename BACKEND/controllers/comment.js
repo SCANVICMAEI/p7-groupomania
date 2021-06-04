@@ -1,5 +1,4 @@
 //IMPORTS
-
 const jwt = require('jsonwebtoken');
 const {
   Message,

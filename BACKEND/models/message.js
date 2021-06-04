@@ -6,9 +6,7 @@ const {
   database
 } = require('../config/sequelizeConfig.js');
 
-
 const Message = database.define('Message', {
-
   message: DataTypes.STRING,
   attachment: DataTypes.STRING,
 },{

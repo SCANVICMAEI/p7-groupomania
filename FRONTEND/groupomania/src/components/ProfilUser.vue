@@ -8,7 +8,7 @@
         <li class="list-group-item">{{ job }}</li>
         <li class="list-group-item">{{ bio }}</li>
         <li class="list-group-item" v-if="isAdmin === true">
-          COMPTE ADMINISTRATEUR
+         * COMPTE ADMINISTRATEUR *
         </li>
       </ul>
     </div>
@@ -36,6 +36,7 @@ export default {
 
   methods: {
     //AFFICHAGE PROFIL STOCKER DANS LE LOCALSTORAGE
+
     Profil() {
       this.UserProfile = JSON.parse(localStorage.getItem("User"));
       this.UserId = this.UserProfile.UserId;

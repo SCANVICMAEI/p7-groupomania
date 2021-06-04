@@ -21,7 +21,7 @@ const {
 // CREATION MESSAGE TCHAT
 
 exports.createMessage = (req, res, next) => {
-  //récupere id avec le token
+  //RECUPERE ID AVEC TOKEN
   const token = req.headers.authorization.split(' ')[1];
   const decodedToken = jwt.verify(token, `${process.env.TOP_SECRET}`);
   const UserId = decodedToken.UserId;
@@ -39,7 +39,6 @@ exports.createMessage = (req, res, next) => {
     .catch(error => res.status(400).json({
       error: "Erreur POST message "
     }));
-
 };
 
 // RECUPERATION DE TOUS LES MESSAGES + COMMENT + USER

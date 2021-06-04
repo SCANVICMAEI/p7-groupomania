@@ -9,6 +9,7 @@
           id="delete"
           @click="deleteComment(id)"
           value="Supprimer"
+          :aria-label="'Supprimer un commentaire ' + id"
         >
           <i class="fas fa-trash-alt"></i>
         </button>
@@ -77,7 +78,12 @@ export default {
             this.$emit("reloadMessages");
           })
           .catch(function (err) {
-            swal("Vous n'avez pas l autorisation d'effacer ce commentaire !!");
+            swal({
+              title: "Aïe!",
+              text: "Vous n'avez pas l'autorisation d'effacer ce commentaire !",
+              icon: "warning",
+              button: "ok",
+            });
             console.log(err + "ERREUR delete comment");
           });
     }, //FIN DELETECOMMENT
@@ -86,6 +92,7 @@ export default {
 </script>
 
 <style scoped>
+
 button {
   background: none;
   box-shadow: none;
@@ -93,13 +100,15 @@ button {
   padding: 0%;
   text-align: right;
 }
+
 button:active {
   background-color: brown;
 }
 
-.commentaires .comment {
+.commentaires.comment {
   overflow: scroll;
 }
+
 .list-group-item {
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
@@ -110,4 +119,5 @@ button:active {
 label {
   display: none;
 }
+
 </style>

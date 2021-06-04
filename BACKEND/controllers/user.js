@@ -29,12 +29,12 @@ exports.signup = (req, res, next) => {
     })
 
   } else {
-    bcrypt.hash(req.body.password, 10) // hash mdp 
+    bcrypt.hash(req.body.password, 10)  
       .then(hash => {
         User.create({
           email: req.body.email,
           username: req.body.username,
-          password: hash, //crypté
+          password: hash, 
           job: req.body.job,
           bio: req.body.bio,
         })
@@ -67,7 +67,7 @@ exports.login = (req, res, next) => {
           error: 'Utilisateur non trouvé !'
         });
       }
-      bcrypt.compare(req.body.password, user.password) // compare mdp requète et mdp bdd
+      bcrypt.compare(req.body.password, user.password) 
         .then(valid => {
           if (!valid) {
             return res.status(401).json({
@@ -100,6 +100,7 @@ exports.login = (req, res, next) => {
 };
 
 // SUPPRIMER COMPTE UTILISATEUR
+
 exports.userDelete = (req, res, next) => {
 
   const token = req.headers.authorization.split(' ')[1];
@@ -176,6 +177,7 @@ exports.userUpdate = (req, res, next) => {
 }
 
 // RECUPERER UN UTILISATEUR 
+
 exports.userGetOne = (req, res, next) => {
   const id = req.params.id;
   User.findOne({

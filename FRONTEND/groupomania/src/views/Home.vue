@@ -44,7 +44,7 @@
                       required
                       autofocus
                     />
-                    <label for="inputtexte">Username</label>
+                    <label for="inputtexte">Username *</label>
                   </div>
 
                   <div class="form-label-group">
@@ -57,7 +57,7 @@
                       required
                       autofocus
                     />
-                    <label for="inputEmail">Email</label>
+                    <label for="inputEmail">Email *</label>
                   </div>
 
                   <div class="form-label-group">
@@ -72,7 +72,7 @@
                       required
                       autofocus
                     />
-                    <label for="inputPassword">Password</label>
+                    <label for="inputPassword">Password *</label>
                   </div>
 
                   <div class="form-label-group" v-if="mode == 'create'">
@@ -122,6 +122,7 @@
                   >
                     Créer un compte
                   </button>
+                  * Champs requis
                 </form>
               </div>
             </div>
@@ -171,6 +172,7 @@ export default {
     },
   },
   methods: {
+
     // SWITCH ENTRE LOGIN ET SIGNUP
 
     switchToCreateAccount() {
@@ -181,6 +183,7 @@ export default {
     },
 
     // SIGNUP
+
     createAccount() {
       let newUser = {
         email: this.email,
@@ -208,7 +211,7 @@ export default {
         .catch(function (err) {
           swal({
             title: "Aïe!",
-            text: "Compte déja existant ou champs invalide!",
+            text: "Compte déja existant ou champs invalides!",
             icon: "warning",
             button: "ok",
           });
@@ -235,7 +238,7 @@ export default {
         .catch(function (err) {
           swal({
             title: "Aïe!",
-            text: "Compte déja existant ou champs invalide!",
+            text: "Champs invalides !",
             icon: "warning",
             button: "ok",
           });
@@ -246,6 +249,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .container {
   min-height: 100vh;
@@ -287,9 +291,7 @@ button {
 }
 
 .logo {
-  /* background-image: url('/assets/logo2.png');
-  background-size: cover;
-  background-position: center; */
+ 
   height: 18%;
   width: 50%;
   text-align: center;

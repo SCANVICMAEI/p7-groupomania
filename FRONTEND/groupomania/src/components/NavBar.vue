@@ -2,7 +2,9 @@
   <header>
     <div class="NavBar">
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+
         <!-- LOGO -->
+        
         <img
           class="navbar-brand"
           src="..\assets\logo2.png"
@@ -12,6 +14,7 @@
         />
 
         <!-- NAVIGATEUR  -->
+
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <router-link to="/Profil" tag="button" class="nav-link"
@@ -44,6 +47,7 @@ export default {
 <style scoped>
 navbar {
   width: 100%;
+  position: fixed;
 }
 img {
   width: 8rem;

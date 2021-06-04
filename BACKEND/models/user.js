@@ -8,18 +8,23 @@ const {
 
 
 const User = database.define('User', {
-  email: { type: DataTypes.STRING, unique: true},
-  username: { type: DataTypes.STRING, unique: true},
+  email: {
+    type: DataTypes.STRING,
+    unique: true
+  },
+  username: {
+    type: DataTypes.STRING,
+    unique: true
+  },
   password: DataTypes.STRING,
   job: DataTypes.TEXT,
   bio: DataTypes.TEXT,
   isAdmin: DataTypes.BOOLEAN,
-},{
+}, {
   Sequelize,
-  modelName:'User'
+  modelName: 'User'
 });
 
 //RELATIONS
 
 module.exports = User;
-

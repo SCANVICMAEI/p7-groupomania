@@ -6,7 +6,7 @@ const {
   database
 } = require('../config/sequelizeConfig.js');
 
-//RELATIONS
+
 
 const Comment = database.define('Comment', {
   content: DataTypes.STRING,

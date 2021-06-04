@@ -8,15 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-     UserId: {
-        alloNull:false,
+      UserId: {
+        alloNull: false,
         type: Sequelize.INTEGER,
-        onDelete:"CASCADE",
-        references : {
-          model:'Users',
-          Key:'id'
+        onDelete: "CASCADE",
+        references: {
+          model: 'Users',
+          Key: 'id'
         }
-      },  
+      },
       message: {
         type: Sequelize.STRING
       },
