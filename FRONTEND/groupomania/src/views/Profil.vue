@@ -14,11 +14,11 @@
         <form class="NewProfil">
           <!-- CHANGEMENT PSEUDO -->
           <div>
-            <label for="inputtexte"></label>
+            <label for="inputusername">username</label>
             <input
               v-model="username"
               type="texte"
-              id="inputtexte"
+              id="inputusername"
               class="form-control"
               placeholder=" Nouveau Pseudo"
               minlength="3"
@@ -31,34 +31,32 @@
 
           <!-- CHANGEMENT BIO -->
           <div>
-            <label for="inputtexte"></label>
+            <label for="inputbio">bio</label>
             <input
               v-model="bio"
               type="texte"
-              id="inputtexte"
+              id="inputbio"
               class="form-control"
               placeholder="Nouvelle bio"
-              minlength="3"
-              maxlength="10"
-              pattern="[A-z-_ çàâéèeîïù]{2,30}"
-              required
+              minlength="5"
+              maxlength="40"
+              pattern="/[^><%#!$/(){}]{15,400}$/"
               autofocus
             />
           </div>
 
           <!-- CHANGEMENT JOB -->
           <div class="mb-3">
-            <label for="inputtexte"></label>
+            <label for="inputjob">Nouveau job</label>
             <input
               v-model="job"
               type="texte"
-              id="inputtexte"
+              id="inputjob"
               class="form-control"
               placeholder="Nouveau job"
               minlength="3"
               maxlength="10"
               pattern="[A-z-_ çàâéèeîïù]{2,30}"
-              required
               autofocus
             />
           </div>
@@ -111,7 +109,7 @@ export default {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
       this.isAdmin = localstorage.isAdmin;
-      this.userId = localstorage.userId;
+      this.UserId = localstorage.UserId;
 
       let config = {
         headers: {
@@ -125,10 +123,10 @@ export default {
       };
 
       axios
-        .put(`http://localhost:3000/user/${this.userId}`, newProfil, config)
+        .put(`http://localhost:3000/user/${this.UserId}`, newProfil, config)
         .then((resp) => {
           swal("Compte modifier");
-          window.location.reload();
+          this.$router.push("/Tchat");
         })
         .catch(function (err) {
           swal("Erreur champs invalide");
@@ -141,7 +139,7 @@ export default {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
       this.isAdmin = localstorage.isAdmin;
-      this.userId = localstorage.userId;
+      this.UserId = localstorage.UserId;
 
       let config = {
         headers: {
@@ -149,10 +147,10 @@ export default {
         },
       };
       axios
-        .delete(`http://localhost:3000/user/${this.userId}`, config)
+        .delete(`http://localhost:3000/user/${this.UserId}`, config)
         .then((resp) => {
           swal("compte supprimer");
-          this.$router.push("/login");
+          this.$router.push("/");
         })
         .catch(function (err) {
           console.log(err + "ERREUR delete profil");
@@ -176,7 +174,8 @@ export default {
   margin-top: 2rem;
 }
 
-.valider, .supprimer {
+.valider,
+.supprimer {
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 700;
@@ -189,8 +188,11 @@ export default {
 .supprimer:hover {
   color: brown;
 }
+label {
+  opacity: 0;
+}
 
-
-
-
+input {
+  text-align: center;
+}
 </style>

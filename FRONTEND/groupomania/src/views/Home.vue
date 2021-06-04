@@ -3,12 +3,12 @@
     <div class="row no-gutter">
       <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
       <div class="col-md-8 col-lg-6 blocp">
-        <img src="../assets/logo2.png" class="logo" />
-        <h2 class="login-heading mb-4">Discutons, Partageons, Avançons...</h2>
+        <img src="../assets/logo2.png" class="logo" alt="logo groupomania" />
+        <h1 class="login-heading mb-4">Discutons, Partageons, Avançons...</h1>
         <div class="login d-flex align-items-center py-5">
           <div class="container">
             <div class="row">
-              <div class="col-md-9 col-lg-8 mx-auto bloc">
+              <div class="col-9 mx-auto bloc">
                 <h2 class="login-heading mb-4" v-if="mode == 'login'">
                   S'identifier
                 </h2>
@@ -16,7 +16,7 @@
                 <p v-if="mode == 'login'">
                   Pas encore inscrit ?
                   <button class="switche" @click="switchToCreateAccount()">
-                    Je minscrit
+                    Je m'inscris
                   </button>
                 </p>
 
@@ -44,7 +44,7 @@
                       required
                       autofocus
                     />
-                    <label for="inputtexte">Pseudo</label>
+                    <label for="inputtexte">Username</label>
                   </div>
 
                   <div class="form-label-group">
@@ -78,7 +78,7 @@
                   <div class="form-label-group" v-if="mode == 'create'">
                     <input
                       v-model="bio"
-                      type="textb"
+                      type="text"
                       id="inputbio"
                       class="form-control"
                       placeholder="bio"
@@ -87,13 +87,13 @@
                       maxlength="40"
                       pattern="/[^><%#!$/(){}]{15,400}$/"
                     />
-                    <label for="inputbio">bio</label>
+                    <label for="inputbio">Bio</label>
                   </div>
 
                   <div class="form-label-group" v-if="mode == 'create'">
                     <input
                       v-model="job"
-                      type="textj"
+                      type="text"
                       id="inputjob"
                       class="form-control"
                       placeholder="job"
@@ -102,7 +102,7 @@
                       pattern="/[^><%#!$/(){}]{15,400}$/"
                       autofocus
                     />
-                    <label for="inputjob">job</label>
+                    <label for="inputjob">Job</label>
                   </div>
 
                   <button
@@ -134,6 +134,7 @@
 
 <script>
 const axios = require("axios");
+import swal from "sweetalert";
 export default {
   name: "Home",
   data() {
@@ -192,13 +193,25 @@ export default {
         .post("http://localhost:3000/user/signup", newUser)
         .then((res) => {
           console.log(res.data);
+          swal("ok compte");
           if (res === 201) {
-            this.$router.push("/login");
-            switchToLogin();
+            this.loginAccount();
           }
+          swal({
+            title: "Compte Créer!",
+            text: "Vous pouvez maintenant vous identifier",
+            icon: "success",
+            button: "OK",
+            position: "top-end",
+          });
         })
         .catch(function (err) {
-          swal("Compte déja existant ou champs invalide");
+          swal({
+            title: "Aïe!",
+            text: "Compte déja existant ou champs invalide!",
+            icon: "warning",
+            button: "ok",
+          });
           console.log(err);
         });
     },
@@ -220,7 +233,13 @@ export default {
           }
         })
         .catch(function (err) {
-          swal("Compte inexistant ou champs invalide");
+          swal({
+            title: "Aïe!",
+            text: "Compte déja existant ou champs invalide!",
+            icon: "warning",
+            button: "ok",
+          });
+
           console.log(err + "login hs");
         });
     },
@@ -231,11 +250,14 @@ export default {
 .container {
   min-height: 100vh;
 }
+p {
+  text-align: center;
+}
 .bloc {
   margin-bottom: 2rem;
   padding: 1rem;
   background-color: #c6c6c4;
-  border: 1px solid #3b3b3b;
+  border: 2px solid brown;
   box-shadow: 2px 2px 2px#ababa9;
   opacity: 0.8;
   border-radius: 20px;
@@ -268,9 +290,11 @@ button {
   /* background-image: url('/assets/logo2.png');
   background-size: cover;
   background-position: center; */
-  height: 15rem;
+  height: 18%;
+  width: 50%;
   text-align: center;
   margin: auto;
+  padding-top: 2rem;
   display: flex;
 }
 

@@ -5,7 +5,7 @@
     </div>
 
     <div class="container-fluide row">
-      <div class="col-xl-3 col-lg-3 col-md-3  Profil">
+      <div class="col-xl-3 col-lg-3 col-md-3 Profil">
         <ProfilUser />
       </div>
 
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-
 // IMPORT COMPONENTS
 import ProfilUser from "../components/ProfilUser.vue";
 import NavBar from "../components/NavBar.vue";

@@ -1,12 +1,15 @@
 
 <template>
-  <div >
+  <div>
     <div class="bloc profil">
       <ul class="list-group text-center">
         <li class="list-group-item">Bonjour {{ username }}</li>
         <li class="list-group-item">{{ email }}</li>
         <li class="list-group-item">{{ job }}</li>
         <li class="list-group-item">{{ bio }}</li>
+        <li class="list-group-item" v-if="isAdmin === true">
+          COMPTE ADMINISTRATEUR
+        </li>
       </ul>
     </div>
   </div>
@@ -26,6 +29,8 @@ export default {
       username: "",
       job: "",
       bio: "",
+      isAdmin: "",
+      UserId: "",
     };
   },
 
@@ -33,11 +38,11 @@ export default {
     //AFFICHAGE PROFIL STOCKER DANS LE LOCALSTORAGE
     Profil() {
       this.UserProfile = JSON.parse(localStorage.getItem("User"));
-      this.userId = this.UserProfile.userId;
+      this.UserId = this.UserProfile.UserId;
       this.token = this.UserProfile.token;
 
       axios
-        .get("http://localhost:3000/user/" + this.userId)
+        .get("http://localhost:3000/user/" + this.UserId)
         .then((res) => {
           let User = res.data;
           this.email = User.email;
@@ -56,9 +61,9 @@ export default {
 };
 </script>
    <style scoped >
-   .bloc{
-     width: 80%;
-     margin: auto;
-   }
+.bloc {
+  width: 80%;
+  margin: auto;
+}
 </style>
       

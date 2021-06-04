@@ -10,11 +10,9 @@ const {
 
 const Comment = database.define('Comment', {
   content: DataTypes.STRING,
-  // idMessage: DataTypes.INTEGER,
-  // idUser: DataTypes.INTEGER
-},{
+}, {
   Sequelize,
-  modelName:'Comment'
+  modelName: 'Comment'
 });
 
 module.exports = Comment;

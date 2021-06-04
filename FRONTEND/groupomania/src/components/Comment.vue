@@ -1,14 +1,24 @@
 <template>
   <!--BOUCLE SUR LES COMMENTAIRE -->
-  <div >
-    <ul class="list-group ">
-      <li class="list-group-item commentaires ">
-        {{ content }} <br />
-        <button @click="deleteComment(id)">
-          <i class="fas fa-trash-alt trash"></i>
+  <div>
+    <div class="list-group">
+      <div class="list-group-item commentaires">
+        <button
+          class="delete"
+          type="reset"
+          id="delete"
+          @click="deleteComment(id)"
+          value="Supprimer"
+        >
+          <i class="fas fa-trash-alt"></i>
         </button>
-      </li>
-    </ul>
+
+        Commentaire de {{ User.username }}<br />
+        <p class="comment">
+          {{ content }}
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -19,7 +29,7 @@ const axios = require("axios");
 
 export default {
   name: "Comment",
-  emits:["reloadMessages"],
+  emits: ["reloadMessages"],
   props: {
     id: {
       type: Number,
@@ -33,10 +43,16 @@ export default {
       type: Number,
       required: true,
     },
+    User: {
+      type: Array,
+      require: true,
+    },
   },
 
   data() {
-    return {};
+    return {
+      isAdmin: "",
+    };
   },
 
   mounted() {},
@@ -47,7 +63,7 @@ export default {
       let localstorage = JSON.parse(localStorage.getItem("User"));
       this.token = localstorage.token;
       this.isAdmin = localstorage.isAdmin;
-      this.userId = localstorage.userId;
+      this.UserId = localstorage.UserId;
 
       let config = {
         headers: {
@@ -58,7 +74,7 @@ export default {
         axios
           .delete(`http://localhost:3000/comment/${id}`, config)
           .then((resp) => {
-            this.$emit("reloadMessages")
+            this.$emit("reloadMessages");
           })
           .catch(function (err) {
             swal("Vous n'avez pas l autorisation d'effacer ce commentaire !!");
@@ -75,6 +91,14 @@ button {
   box-shadow: none;
   border: none;
   padding: 0%;
+  text-align: right;
+}
+button:active {
+  background-color: brown;
+}
+
+.commentaires .comment {
+  overflow: scroll;
 }
 .list-group-item {
   border-top-right-radius: 25px;
@@ -82,9 +106,8 @@ button {
   border-top-left-radius: 25px;
   margin: 1rem;
 }
-.commentaires{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+
+label {
+  display: none;
 }
 </style>
