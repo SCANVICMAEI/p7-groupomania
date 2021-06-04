@@ -30,11 +30,11 @@ Si sequelize et mysql2 ne sont pas installés localement faire ceci: npm i -g se
 ## Côté front
 ```bash
 cd ../frontend
+```
+Si besoin, (si pas de serveur web qui tourne sur lequel on peut executer notre application)`: 
+```bash
+npm install && npm run serve
+```
 
-
-- Installer les dépendances
--  Vous pouvez maintenat lancer le serveur avec npm run serve 
-
-
-<h2>Groupomania explication du projet </h2>
-
+## Résultat
+Enjoy localhost:8080
